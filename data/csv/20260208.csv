@@ -1,0 +1,42 @@
+report_date,offense_type,% Change,+/-,7-Day Totals,Friday 2/6,Monday 2/2,Prev. 7 1/26-2/1,Saturday 2/7,Sunday 2/8,Thursday 2/5,Tuesday 2/3,Wednesday 2/4,YTD 25 1/1-2/8,YTD 26 1/1-2/8,extracted_date_text
+2026-02-08,Murder,+200%,6,2,0,0,0,0,0,0,1,1,3,9,"Sunday, February 8, 2026"
+2026-02-08,Sex Offense,0%,0,3,0,1,8,1,1,0,0,0,27,27,"Sunday, February 8, 2026"
+2026-02-08,Rape,+27%,4,3,0,1,7,1,1,0,0,0,15,19,"Sunday, February 8, 2026"
+2026-02-08,Fondling,-33%,-4,0,0,0,1,0,0,0,0,0,12,8,"Sunday, February 8, 2026"
+2026-02-08,Robbery,-63%,-57,5,1,1,1,0,0,1,0,2,90,33,"Sunday, February 8, 2026"
+2026-02-08,Commercial Robbery,-67%,-12,1,0,1,0,0,0,0,0,0,18,6,"Sunday, February 8, 2026"
+2026-02-08,Residential Robbery,-86%,-6,0,0,0,0,0,0,0,0,0,7,1,"Sunday, February 8, 2026"
+2026-02-08,Citizen Robbery,-51%,-24,3,1,0,1,0,0,1,0,1,47,23,"Sunday, February 8, 2026"
+2026-02-08,Carjacking,-83%,-15,1,0,0,0,0,0,0,0,1,18,3,"Sunday, February 8, 2026"
+2026-02-08,Assault,-11%,-19,24,3,3,13,3,3,4,6,2,168,149,"Sunday, February 8, 2026"
+2026-02-08,Non-Fatal Shooting,-48%,-13,3,1,0,1,0,0,1,1,0,27,14,"Sunday, February 8, 2026"
+2026-02-08,Assault (Other Weapon),+3%,1,7,1,0,5,0,0,3,2,1,36,37,"Sunday, February 8, 2026"
+2026-02-08,Assault (No Weapon),-7%,-7,14,1,3,7,3,3,0,3,1,105,98,"Sunday, February 8, 2026"
+2026-02-08,Domestic Violence,-12%,-15,21,0,3,17,4,4,2,5,3,126,111,"Sunday, February 8, 2026"
+2026-02-08,DV Non-Fatal Shooting,-100%,-1,0,0,0,0,0,0,0,0,0,1,0,"Sunday, February 8, 2026"
+2026-02-08,DV Assault (Other Weapon),0%,0,3,0,1,1,0,0,1,1,0,15,15,"Sunday, February 8, 2026"
+2026-02-08,DV Assault (No Weapon),-13%,-14,18,0,2,16,4,4,1,4,3,110,96,"Sunday, February 8, 2026"
+2026-02-08,Violent Crime Total,-21%,-85,55,4,8,39,8,8,7,12,8,414,329,"Sunday, February 8, 2026"
+2026-02-08,DCR Offense - NON-VIOLENT,% Change,+/-,"7-Day
+Totals","Friday
+2/6","Monday
+2/2","Prev. 7
+1/26-2/1","Saturday
+2/7","Sunday
+2/8","Thursday
+2/5","Tuesday
+2/3","Wednesday
+2/4","YTD 25
+1/1-2/8","YTD 26
+1/1-2/8","Sunday, February 8, 2026"
+2026-02-08,Burglary,-56%,-55,6,0,0,4,1,1,1,2,1,99,44,"Sunday, February 8, 2026"
+2026-02-08,Commercial Burglary,-83%,-39,3,0,0,0,1,0,1,1,0,47,8,"Sunday, February 8, 2026"
+2026-02-08,Residential Burglary,-31%,-16,3,0,0,4,0,1,0,1,1,52,36,"Sunday, February 8, 2026"
+2026-02-08,Other Burglary,0%,0,0,0,0,0,0,0,0,0,0,0,0,"Sunday, February 8, 2026"
+2026-02-08,Larceny,-14%,-121,87,19,11,82,13,5,8,19,12,860,739,"Sunday, February 8, 2026"
+2026-02-08,Theft from Auto,-10%,-47,44,10,6,44,4,2,4,13,5,463,416,"Sunday, February 8, 2026"
+2026-02-08,Other Theft,-19%,-74,43,9,5,38,9,3,4,6,7,397,323,"Sunday, February 8, 2026"
+2026-02-08,Stolen Vehicle,-26%,-125,60,12,8,37,10,6,8,11,5,474,349,"Sunday, February 8, 2026"
+2026-02-08,Property Crime Total,-21%,-301,153,31,19,123,24,12,17,32,18,1433,1132,"Sunday, February 8, 2026"
+2026-02-08,Violent Crime Total,-21%,-85,55,4,8,39,8,8,7,12,8,414,329,"Sunday, February 8, 2026"
+2026-02-08,Total Crime,-21%,-386,208,35,27,162,32,20,24,44,26,1847,1461,"Sunday, February 8, 2026"

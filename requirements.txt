@@ -1,0 +1,23 @@
+# Prince George's County Crime Report Parser
+# Python dependencies
+
+# PDF parsing
+pdfplumber>=0.10.0
+
+# HTTP requests
+requests>=2.31.0
+
+# Date parsing
+python-dateutil>=2.8.2
+
+# Optional: Scheduling
+schedule>=1.2.0
+
+# Optional: Data analysis
+pandas>=2.0.0
+
+# Optional: CSV handling (included in Python stdlib, but listed for reference)
+# csv - built-in
+
+# Optional: Command-line progress bars
+tqdm>=4.66.0
