@@ -13,8 +13,12 @@
         }
 
         :root {
-            --primary: #1e40af;
-            --primary-dark: #1e3a8a;
+            /* Prince George's County Official Colors - Blue and Gold from county seal */
+            --primary: #003DA5;
+            --primary-dark: #002d7a;
+            --primary-light: #1a5dc7;
+            --gold: #FFB81C;
+            --gold-dark: #e6a419;
             --success: #059669;
             --danger: #dc2626;
             --warning: #d97706;
@@ -39,6 +43,7 @@
             color: white;
             padding: 2rem 1rem;
             box-shadow: var(--shadow-lg);
+            border-bottom: 4px solid var(--gold);
         }
 
         .header-content {
@@ -316,17 +321,19 @@
         }
 
         .highlight-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
+            border: 2px solid var(--gold);
         }
 
         .highlight-card .card-title,
         .highlight-card .comparison-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--gold);
         }
 
         .highlight-card .comparison-item {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 184, 28, 0.15);
+            border: 1px solid rgba(255, 184, 28, 0.3);
         }
 
         .arrow-up::before {

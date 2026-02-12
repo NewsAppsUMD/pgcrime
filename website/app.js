@@ -257,15 +257,15 @@ class CrimeDashboard {
                 datasets: [{
                     label: '2026 YTD',
                     data: [totalCrime?.ytd_2026 || 0, violentCrime?.ytd_2026 || 0, propertyCrime?.ytd_2026 || 0],
-                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
-                    borderColor: 'rgba(30, 64, 175, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 61, 165, 0.85)',
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    borderWidth: 2
                 }, {
                     label: '2025 YTD',
                     data: [totalCrime?.ytd_2025 || 0, violentCrime?.ytd_2025 || 0, propertyCrime?.ytd_2025 || 0],
-                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
-                    borderColor: 'rgba(220, 38, 38, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 184, 28, 0.75)',
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -329,15 +329,15 @@ class CrimeDashboard {
                 datasets: [{
                     label: '2026 YTD',
                     data: stats.map(s => s?.ytd_2026 || 0),
-                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
-                    borderColor: 'rgba(30, 64, 175, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 61, 165, 0.85)',
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    borderWidth: 2
                 }, {
                     label: '2025 YTD',
                     data: stats.map(s => s?.ytd_2025 || 0),
-                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
-                    borderColor: 'rgba(220, 38, 38, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 184, 28, 0.75)',
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -387,15 +387,15 @@ class CrimeDashboard {
                 datasets: [{
                     label: '2026 YTD',
                     data: stats.map(s => s?.ytd_2026 || 0),
-                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
-                    borderColor: 'rgba(30, 64, 175, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 61, 165, 0.85)',
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    borderWidth: 2
                 }, {
                     label: '2025 YTD',
                     data: stats.map(s => s?.ytd_2025 || 0),
-                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
-                    borderColor: 'rgba(220, 38, 38, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 184, 28, 0.75)',
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -445,15 +445,15 @@ class CrimeDashboard {
                 datasets: [{
                     label: 'Last 7 Days',
                     data: [violentCrime?.seven_day_total || 0, propertyCrime?.seven_day_total || 0],
-                    backgroundColor: 'rgba(5, 150, 105, 0.8)',
-                    borderColor: 'rgba(5, 150, 105, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 61, 165, 0.85)',
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    borderWidth: 2
                 }, {
                     label: 'Previous 7 Days',
                     data: [violentCrime?.prev_seven_day_total || 0, propertyCrime?.prev_seven_day_total || 0],
-                    backgroundColor: 'rgba(217, 119, 6, 0.8)',
-                    borderColor: 'rgba(217, 119, 6, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 184, 28, 0.75)',
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -515,11 +515,15 @@ class CrimeDashboard {
                 datasets: [{
                     label: 'Total Crime',
                     data: totalData,
-                    borderColor: 'rgba(30, 64, 175, 1)',
-                    backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                    borderWidth: 2,
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    backgroundColor: 'rgba(0, 61, 165, 0.15)',
+                    borderWidth: 3,
                     tension: 0.3,
-                    fill: true
+                    fill: true,
+                    pointBackgroundColor: 'rgba(0, 61, 165, 1)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4
                 }, {
                     label: 'Violent Crime',
                     data: violentData,
@@ -527,15 +531,23 @@ class CrimeDashboard {
                     backgroundColor: 'rgba(220, 38, 38, 0.1)',
                     borderWidth: 2,
                     tension: 0.3,
-                    fill: true
+                    fill: true,
+                    pointBackgroundColor: 'rgba(220, 38, 38, 1)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 3
                 }, {
                     label: 'Property Crime',
                     data: propertyData,
-                    borderColor: 'rgba(5, 150, 105, 1)',
-                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    backgroundColor: 'rgba(255, 184, 28, 0.15)',
                     borderWidth: 2,
                     tension: 0.3,
-                    fill: true
+                    fill: true,
+                    pointBackgroundColor: 'rgba(255, 184, 28, 1)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 3
                 }]
             },
             options: {
