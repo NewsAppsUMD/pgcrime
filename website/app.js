@@ -5,6 +5,9 @@ class CrimeDashboard {
         this.data = null;
         this.availableDates = [];
         this.charts = {};
+        // Configure data path - can be overridden by setting window.DATA_PATH
+        this.dataPath = window.DATA_PATH || '../data/json/';
+        console.log('Dashboard initialized with data path:', this.dataPath);
         this.init();
     }
 
@@ -16,7 +19,27 @@ class CrimeDashboard {
             this.renderSummaryCards();
             this.renderCharts();
             this.renderTable('all');
+        } else {
+            this.showNoDataMessage();
         }
+    }
+
+    showNoDataMessage() {
+        const lastUpdated = document.getElementById('lastUpdated');
+        lastUpdated.innerHTML = `
+            <strong>⚠️ No data files found</strong><br>
+            Looking for JSON files at: ${this.dataPath}<br>
+            <small>Please ensure crime data JSON files exist in the data/json directory.</small>
+        `;
+        lastUpdated.style.color = '#fee2e2';
+        lastUpdated.style.background = '#7f1d1d';
+        lastUpdated.style.padding = '1rem';
+        lastUpdated.style.borderRadius = '8px';
+        lastUpdated.style.marginTop = '1rem';
+
+        console.error('No data files found at:', this.dataPath);
+        console.log('Tried to load files with format: YYYYMMDD.json');
+        console.log('Example: 20260212.json for February 12, 2026');
     }
 
     async loadAvailableDates() {
@@ -33,7 +56,7 @@ class CrimeDashboard {
                 const dateStr = this.formatDateForFile(date);
 
                 try {
-                    const response = await fetch(`../data/json/${dateStr}.json`);
+                    const response = await fetch(`${this.dataPath}${dateStr}.json`);
                     if (response.ok) {
                         dates.push(dateStr);
                     }
@@ -86,7 +109,7 @@ class CrimeDashboard {
 
     async loadData(dateStr) {
         try {
-            const response = await fetch(`../data/json/${dateStr}.json`);
+            const response = await fetch(`${this.dataPath}${dateStr}.json`);
             this.data = await response.json();
 
             // Update last updated text

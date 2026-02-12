@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Example</title>
+</head>
+<body>
+    <h1>Data Path Configuration Examples</h1>
+
+    <h2>Option 1: Inline Configuration (Before loading app.js)</h2>
+    <pre><code>&lt;script&gt;
+    // Set custom data path before loading app.js
+    window.DATA_PATH = '/custom/path/to/data/json/';
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+
+    <h2>Option 2: Common Configurations</h2>
+
+    <h3>Default (Relative Path)</h3>
+    <pre><code>window.DATA_PATH = '../data/json/';</code></pre>
+    <p>Use when website is in website/ and data is in data/json/</p>
+
+    <h3>Same Directory</h3>
+    <pre><code>window.DATA_PATH = './data/json/';</code></pre>
+    <p>Use when data folder is in the same directory as index.html</p>
+
+    <h3>Absolute Path (Local)</h3>
+    <pre><code>window.DATA_PATH = '/data/json/';</code></pre>
+    <p>Use for absolute paths from web root</p>
+
+    <h3>Remote API or CDN</h3>
+    <pre><code>window.DATA_PATH = 'https://example.com/api/crime-data/';</code></pre>
+    <p>Use if serving data from a different domain (requires CORS)</p>
+
+    <h2>Testing Your Configuration</h2>
+    <p>After setting the path, test it by:</p>
+    <ol>
+        <li>Open test.html to validate data accessibility</li>
+        <li>Check browser console for any fetch errors</li>
+        <li>Verify the correct path is displayed in test.html</li>
+    </ol>
+
+    <h2>Current Setup Detection</h2>
+    <p>The dashboard will automatically log the data path being used. Check your browser console for messages like:</p>
+    <pre><code>Dashboard initialized with data path: ../data/json/</code></pre>
+</body>
+</html>

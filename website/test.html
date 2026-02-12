@@ -46,8 +46,12 @@
             const results = document.getElementById('results');
             let html = '';
 
+            // Configure data path
+            const dataPath = window.DATA_PATH || '../data/json/';
+
             // Test 1: Check for data files
             html += '<div class="test-item"><h3>Test 1: Data File Availability</h3>';
+            html += `<p><strong>Data Path:</strong> ${dataPath}</p>`;
             try {
                 const dates = [];
                 const today = new Date();
@@ -61,7 +65,7 @@
                     const dateStr = `${year}${month}${day}`;
 
                     try {
-                        const response = await fetch(`../data/json/${dateStr}.json`);
+                        const response = await fetch(`${dataPath}${dateStr}.json`);
                         if (response.ok) {
                             dates.push(dateStr);
                         }
@@ -74,7 +78,7 @@
                     html += `<div class="status success">✓ Found ${dates.length} data files</div>`;
                     html += `<p>Available dates: ${dates.join(', ')}</p>`;
                 } else {
-                    html += '<div class="status error">✗ No data files found in ../data/json/</div>';
+                    html += `<div class="status error">✗ No data files found at ${dataPath}</div>`;
                     html += '<p>Please ensure JSON files exist in the data/json directory.</p>';
                 }
             } catch (error) {
@@ -98,7 +102,7 @@
                     const dateStr = `${year}${month}${day}`;
 
                     try {
-                        const response = await fetch(`../data/json/${dateStr}.json`);
+                        const response = await fetch(`${dataPath}${dateStr}.json`);
                         if (response.ok) {
                             latestData = await response.json();
                             latestDate = dateStr;
