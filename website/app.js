@@ -149,47 +149,81 @@ class CrimeDashboard {
         // Total Crime
         const totalCrime = this.getStatByOffense('Total Crime');
         if (totalCrime) {
-            document.getElementById('totalCrime7').textContent = totalCrime.seven_day_total;
-            document.getElementById('totalCrimeYTD').textContent = totalCrime.ytd_2026;
-            document.getElementById('totalCrimeChange').innerHTML =
-                this.formatChange(totalCrime.ytd_2026 - totalCrime.ytd_2025);
+            const pctChange = this.calculatePercentChange(totalCrime.ytd_2026, totalCrime.ytd_2025);
+            document.getElementById('totalCrime7').innerHTML = this.formatCardValue(totalCrime.seven_day_total, totalCrime.ytd_2026, totalCrime.ytd_2025);
+            document.getElementById('totalCrimeYTD').innerHTML = this.formatYTDComparison(totalCrime.ytd_2026, totalCrime.ytd_2025);
+            document.getElementById('totalCrimeChange').innerHTML = this.formatChange(totalCrime.ytd_2026 - totalCrime.ytd_2025, pctChange);
         }
 
         // Violent Crime
         const violentCrime = this.getStatByOffense('Violent Crime Total');
         if (violentCrime) {
-            document.getElementById('violentCrime7').textContent = violentCrime.seven_day_total;
-            document.getElementById('violentCrimeYTD').textContent = violentCrime.ytd_2026;
-            document.getElementById('violentCrimeChange').innerHTML =
-                this.formatChange(violentCrime.ytd_2026 - violentCrime.ytd_2025);
+            const pctChange = this.calculatePercentChange(violentCrime.ytd_2026, violentCrime.ytd_2025);
+            document.getElementById('violentCrime7').innerHTML = this.formatCardValue(violentCrime.seven_day_total, violentCrime.ytd_2026, violentCrime.ytd_2025);
+            document.getElementById('violentCrimeYTD').innerHTML = this.formatYTDComparison(violentCrime.ytd_2026, violentCrime.ytd_2025);
+            document.getElementById('violentCrimeChange').innerHTML = this.formatChange(violentCrime.ytd_2026 - violentCrime.ytd_2025, pctChange);
         }
 
         // Property Crime
         const propertyCrime = this.getStatByOffense('Property Crime Total');
         if (propertyCrime) {
-            document.getElementById('propertyCrime7').textContent = propertyCrime.seven_day_total;
-            document.getElementById('propertyCrimeYTD').textContent = propertyCrime.ytd_2026;
-            document.getElementById('propertyCrimeChange').innerHTML =
-                this.formatChange(propertyCrime.ytd_2026 - propertyCrime.ytd_2025);
+            const pctChange = this.calculatePercentChange(propertyCrime.ytd_2026, propertyCrime.ytd_2025);
+            document.getElementById('propertyCrime7').innerHTML = this.formatCardValue(propertyCrime.seven_day_total, propertyCrime.ytd_2026, propertyCrime.ytd_2025);
+            document.getElementById('propertyCrimeYTD').innerHTML = this.formatYTDComparison(propertyCrime.ytd_2026, propertyCrime.ytd_2025);
+            document.getElementById('propertyCrimeChange').innerHTML = this.formatChange(propertyCrime.ytd_2026 - propertyCrime.ytd_2025, pctChange);
         }
 
         // Homicides (Murder)
         const homicides = this.getStatByOffense('Murder');
         if (homicides) {
-            document.getElementById('homicide7').textContent = homicides.seven_day_total;
-            document.getElementById('homicideYTD').textContent = homicides.ytd_2026;
-            document.getElementById('homicideChange').innerHTML =
-                this.formatChange(homicides.ytd_2026 - homicides.ytd_2025);
+            const pctChange = this.calculatePercentChange(homicides.ytd_2026, homicides.ytd_2025);
+            document.getElementById('homicide7').innerHTML = this.formatCardValue(homicides.seven_day_total, homicides.ytd_2026, homicides.ytd_2025);
+            document.getElementById('homicideYTD').innerHTML = this.formatYTDComparison(homicides.ytd_2026, homicides.ytd_2025);
+            document.getElementById('homicideChange').innerHTML = this.formatChange(homicides.ytd_2026 - homicides.ytd_2025, pctChange);
         }
     }
 
-    formatChange(value) {
+    calculatePercentChange(current, previous) {
+        if (previous === 0) return current > 0 ? 100 : 0;
+        return ((current - previous) / previous * 100).toFixed(1);
+    }
+
+    formatCardValue(sevenDay, ytd2026, ytd2025) {
+        const pct = this.calculatePercentChange(ytd2026, ytd2025);
+        const isDecrease = ytd2026 < ytd2025;
+        const color = isDecrease ? '#059669' : (ytd2026 > ytd2025 ? '#dc2626' : '#64748b');
+
+        return `
+            <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+                <span style="font-size: 2.5rem; font-weight: 700;">${sevenDay}</span>
+                <span style="font-size: 1.25rem; font-weight: 700; color: ${color};">
+                    ${pct > 0 ? '+' : ''}${pct}%
+                </span>
+            </div>
+            <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">
+                7-day total
+            </div>
+        `;
+    }
+
+    formatYTDComparison(ytd2026, ytd2025) {
+        const pct = this.calculatePercentChange(ytd2026, ytd2025);
+        const isDecrease = ytd2026 < ytd2025;
+        const color = isDecrease ? '#059669' : (ytd2026 > ytd2025 ? '#dc2626' : '#64748b');
+
+        return `
+            <div style="font-size: 1.5rem; font-weight: 700;">${ytd2026}</div>
+            <div style="font-size: 0.875rem; color: #64748b;">2026 YTD</div>
+        `;
+    }
+
+    formatChange(value, percentChange) {
         if (value === 0) {
             return '<span class="change-badge neutral">No Change</span>';
         } else if (value < 0) {
-            return `<span class="change-badge positive arrow-down">${value}</span>`;
+            return `<span class="change-badge positive arrow-down">${percentChange}% <span style="font-size: 0.875rem; opacity: 0.8;">(${value})</span></span>`;
         } else {
-            return `<span class="change-badge negative arrow-up">+${value}</span>`;
+            return `<span class="change-badge negative arrow-up">+${percentChange}% <span style="font-size: 0.875rem; opacity: 0.8;">(+${value})</span></span>`;
         }
     }
 
@@ -491,6 +525,7 @@ class CrimeDashboard {
 
             const ytdChange = stat.ytd_2026 - stat.ytd_2025;
             const weekChange = stat.seven_day_total - stat.prev_seven_day_total;
+            const ytdPct = this.calculatePercentChange(stat.ytd_2026, stat.ytd_2025);
 
             return `
                 <tr>
@@ -500,7 +535,7 @@ class CrimeDashboard {
                     <td class="num-cell">${this.formatTableChange(weekChange)}</td>
                     <td class="num-cell"><strong>${stat.ytd_2026}</strong></td>
                     <td class="num-cell">${stat.ytd_2025}</td>
-                    <td class="num-cell">${this.formatTableChange(ytdChange)}</td>
+                    <td class="num-cell">${this.formatTableChangeWithPercent(ytdChange, ytdPct)}</td>
                 </tr>
             `;
         }).join('');
@@ -513,6 +548,16 @@ class CrimeDashboard {
             return `<span style="color: #059669; font-weight: 600;">${value}</span>`;
         } else {
             return `<span style="color: #dc2626; font-weight: 600;">+${value}</span>`;
+        }
+    }
+
+    formatTableChangeWithPercent(value, pct) {
+        if (value === 0) {
+            return '<span style="color: #64748b;">0%</span>';
+        } else if (value < 0) {
+            return `<span style="color: #059669; font-weight: 700;">${pct}% <span style="font-size: 0.875em; opacity: 0.7;">(${value})</span></span>`;
+        } else {
+            return `<span style="color: #dc2626; font-weight: 700;">+${pct}% <span style="font-size: 0.875em; opacity: 0.7;">(+${value})</span></span>`;
         }
     }
 
