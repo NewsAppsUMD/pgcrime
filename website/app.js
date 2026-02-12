@@ -204,7 +204,7 @@ class CrimeDashboard {
                 </span>
             </div>
             <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">
-                7-day total
+                7-day total <span style="font-size: 0.75rem; opacity: 0.8;">(vs prev. 7 days)</span>
             </div>
         `;
     }
