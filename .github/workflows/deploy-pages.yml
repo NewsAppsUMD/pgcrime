@@ -38,8 +38,9 @@ jobs:
           mkdir -p _site
           cp -r docs/* _site/
 
-          # Create symlink for data directory
-          ln -sf ../data _site/data
+          # Copy data directory (symlinks don't work in GitHub Pages)
+          mkdir -p _site/data
+          cp -r data/json _site/data/json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
