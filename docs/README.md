@@ -32,9 +32,9 @@ An interactive, single-page web application for visualizing and analyzing crime 
 
 ### Local Development
 
-1. **Start a local web server** in the website directory:
+1. **Start a local web server** in the docs directory:
    ```bash
-   cd website
+   cd docs
    python -m http.server 8000
    ```
    Or use any other local server (e.g., `npx serve`, `php -S localhost:8000`)
@@ -46,18 +46,44 @@ An interactive, single-page web application for visualizing and analyzing crime 
 
 ### Deployment
 
-The website is static HTML/CSS/JavaScript and can be hosted on:
-- GitHub Pages
+#### GitHub Pages (Automated)
+
+The repository includes a GitHub Actions workflow (`.github/workflows/deploy-pages.yml`) that automatically deploys to GitHub Pages when changes are pushed to the `main` branch.
+
+**Setup Steps:**
+
+1. Enable GitHub Pages in your repository settings:
+   - Go to Settings → Pages
+   - Source: Select "GitHub Actions"
+
+2. Push changes to trigger deployment:
+   ```bash
+   git push origin main
+   ```
+
+3. Access your deployed site at:
+   ```
+   https://newsappsumd.github.io/pgcrime/
+   ```
+
+The workflow automatically:
+- Copies the `docs/` directory contents
+- Creates a symlink to the `data/` directory
+- Deploys to GitHub Pages
+
+#### Alternative Hosting
+
+The docs is static HTML/CSS/JavaScript and can also be hosted on:
 - Netlify
 - Vercel
 - Any web server (Apache, Nginx, etc.)
 
-**Important**: Ensure the `data/json/` directory is accessible at `../data/json/` relative to the website directory.
+**Important**: Ensure the `data/json/` directory is accessible at `./data/json/` relative to the docs directory.
 
 ## File Structure
 
 ```
-website/
+docs/
 ├── index.html       # Main HTML structure
 ├── app.js           # Dashboard logic and data visualization
 └── README.md        # This file

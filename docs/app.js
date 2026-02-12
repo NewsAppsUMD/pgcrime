@@ -216,7 +216,6 @@ class CrimeDashboard {
 
         return `
             <div style="font-size: 1.5rem; font-weight: 700;">${ytd2026}</div>
-            <div style="font-size: 0.875rem; color: #64748b;">2026 YTD</div>
         `;
     }
 
