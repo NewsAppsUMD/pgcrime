@@ -7,7 +7,9 @@ class CrimeDashboard {
         this.charts = {};
         // Configure data path - can be overridden by setting window.DATA_PATH
         this.dataPath = window.DATA_PATH || '../data/json/';
-        console.log('Dashboard initialized with data path:', this.dataPath);
+        console.log('Dashboard initialized');
+        console.log('Data path:', this.dataPath);
+        console.log('Attempting to load from:', this.dataPath + 'manifest.json');
         this.init();
     }
 
@@ -46,7 +48,10 @@ class CrimeDashboard {
         try {
             // Try to load from manifest file first (more reliable for static hosting)
             try {
-                const manifestResponse = await fetch(`${this.dataPath}manifest.json`);
+                const manifestUrl = `${this.dataPath}manifest.json`;
+                console.log('Fetching manifest from:', manifestUrl);
+                const manifestResponse = await fetch(manifestUrl);
+                console.log('Manifest response status:', manifestResponse.status);
                 if (manifestResponse.ok) {
                     const manifest = await manifestResponse.json();
                     this.availableDates = manifest.files
@@ -56,9 +61,12 @@ class CrimeDashboard {
                     this.populateDateSelector();
                     console.log('Loaded dates from manifest:', this.availableDates);
                     return;
+                } else {
+                    console.warn('Manifest returned status:', manifestResponse.status);
                 }
             } catch (e) {
-                console.log('Manifest not found, falling back to file probing');
+                console.warn('Manifest fetch failed:', e.message);
+                console.log('Falling back to file probing');
             }
 
             // Fallback: try to load the most recent files
