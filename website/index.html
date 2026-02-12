@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince George's County Crime Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --success: #059669;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .last-updated {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .comparison-item {
+            padding: 0.75rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .comparison-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .comparison-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .change-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .change-badge.positive {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .change-badge.negative {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .change-badge.neutral {
+            background: var(--border);
+            color: var(--text-muted);
+        }
+
+        .chart-section {
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        .controls {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .controls-header {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        select {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-white);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover {
+            border-color: var(--primary);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .data-table {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-light);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .offense-name {
+            font-weight: 600;
+        }
+
+        .num-cell {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card-value {
+                font-size: 2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .canvas-wrapper {
+                height: 250px;
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-dark);
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .highlight-card .card-title,
+        .highlight-card .comparison-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .highlight-card .comparison-item {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .arrow-up::before {
+            content: '↑';
+            margin-right: 0.25rem;
+        }
+
+        .arrow-down::before {
+            content: '↓';
+            margin-right: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Prince George's County Crime Statistics</h1>
+            <p>Real-time crime trends and year-over-year comparisons</p>
+            <div class="last-updated" id="lastUpdated">Loading...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card highlight-card">
+                <div class="card-header">
+                    <div class="card-title">Total Crime (Last 7 Days)</div>
+                </div>
+                <div class="card-value" id="totalCrime7">-</div>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">YTD 2026</div>
+                        <div class="comparison-value" id="totalCrimeYTD">-</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">vs YTD 2025</div>
+                        <div class="comparison-value" id="totalCrimeChange">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Violent Crime (Last 7 Days)</div>
+                </div>
+                <div class="card-value" id="violentCrime7">-</div>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">YTD 2026</div>
+                        <div class="comparison-value" id="violentCrimeYTD">-</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">vs YTD 2025</div>
+                        <div class="comparison-value" id="violentCrimeChange">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Property Crime (Last 7 Days)</div>
+                </div>
+                <div class="card-value" id="propertyCrime7">-</div>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">YTD 2026</div>
+                        <div class="comparison-value" id="propertyCrimeYTD">-</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">vs YTD 2025</div>
+                        <div class="comparison-value" id="propertyCrimeChange">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Homicides</div>
+                </div>
+                <div class="card-value" id="homicide7">-</div>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">YTD 2026</div>
+                        <div class="comparison-value" id="homicideYTD">-</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">vs YTD 2025</div>
+                        <div class="comparison-value" id="homicideChange">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YTD Comparison Charts -->
+        <h2 class="section-title">Year-to-Date Trends</h2>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">Overall Crime: 2026 vs 2025 (YTD)</div>
+                <div class="chart-subtitle">Comparison of year-to-date totals</div>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="ytdOverallChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">High-Profile Offenses: YTD Comparison</div>
+                <div class="chart-subtitle">Murder, Robbery, Carjacking, Non-Fatal Shootings</div>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="ytdHighProfileChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">Property Crime Breakdown: YTD Comparison</div>
+                <div class="chart-subtitle">Burglary, Larceny, Stolen Vehicles</div>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="ytdPropertyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 7-Day Comparison Charts -->
+        <h2 class="section-title">Weekly Trends (Last 7 Days)</h2>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">7-Day Totals: Current vs Previous Week</div>
+                <div class="chart-subtitle">Violent vs Property Crime comparison</div>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="sevenDayComparisonChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 7-Day Daily Breakdown -->
+        <h2 class="section-title">7-Day Daily Breakdown</h2>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">Daily Crime Totals (Last 7 Days)</div>
+                <div class="chart-subtitle">Total, Violent, and Property crime by day</div>
+            </div>
+            <div class="canvas-wrapper" style="height: 350px;">
+                <canvas id="dailyBreakdownChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Daily View Controls -->
+        <h2 class="section-title">Daily Crime Statistics</h2>
+
+        <div class="controls">
+            <div class="controls-header">Select Date to View Details</div>
+            <div class="control-group">
+                <div class="control-item">
+                    <label class="control-label" for="dateSelect">Report Date</label>
+                    <select id="dateSelect">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label class="control-label" for="categoryFilter">Crime Category</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Crimes</option>
+                        <option value="violent">Violent Crimes</option>
+                        <option value="property">Property Crimes</option>
+                        <option value="high-profile">High-Profile Offenses</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table">
+            <table id="crimeTable">
+                <thead>
+                    <tr>
+                        <th>Offense Type</th>
+                        <th class="num-cell">7-Day Total</th>
+                        <th class="num-cell">Previous 7 Days</th>
+                        <th class="num-cell">Change</th>
+                        <th class="num-cell">YTD 2026</th>
+                        <th class="num-cell">YTD 2025</th>
+                        <th class="num-cell">YTD Change</th>
+                    </tr>
+                </thead>
+                <tbody id="crimeTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem;">Loading data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

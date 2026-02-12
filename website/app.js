@@ -1,0 +1,540 @@
+// Crime Statistics Dashboard Application
+
+class CrimeDashboard {
+    constructor() {
+        this.data = null;
+        this.availableDates = [];
+        this.charts = {};
+        this.init();
+    }
+
+    async init() {
+        await this.loadAvailableDates();
+        if (this.availableDates.length > 0) {
+            await this.loadLatestData();
+            this.setupEventListeners();
+            this.renderSummaryCards();
+            this.renderCharts();
+            this.renderTable('all');
+        }
+    }
+
+    async loadAvailableDates() {
+        try {
+            // Try to load dates from a manifest file or scan directory
+            // For now, we'll try to load the most recent files
+            const dates = [];
+            const today = new Date();
+
+            // Try to load the last 30 days
+            for (let i = 0; i < 30; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = this.formatDateForFile(date);
+
+                try {
+                    const response = await fetch(`../data/json/${dateStr}.json`);
+                    if (response.ok) {
+                        dates.push(dateStr);
+                    }
+                } catch (e) {
+                    // File doesn't exist, continue
+                }
+            }
+
+            this.availableDates = dates.sort().reverse();
+            this.populateDateSelector();
+        } catch (error) {
+            console.error('Error loading available dates:', error);
+        }
+    }
+
+    formatDateForFile(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}${month}${day}`;
+    }
+
+    formatDateForDisplay(dateStr) {
+        // Convert YYYYMMDD to readable format
+        const year = dateStr.substring(0, 4);
+        const month = dateStr.substring(4, 6);
+        const day = dateStr.substring(6, 8);
+        const date = new Date(year, parseInt(month) - 1, day);
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    populateDateSelector() {
+        const select = document.getElementById('dateSelect');
+        select.innerHTML = this.availableDates.map(date =>
+            `<option value="${date}">${this.formatDateForDisplay(date)}</option>`
+        ).join('');
+    }
+
+    async loadLatestData() {
+        if (this.availableDates.length === 0) return;
+
+        const latestDate = this.availableDates[0];
+        await this.loadData(latestDate);
+    }
+
+    async loadData(dateStr) {
+        try {
+            const response = await fetch(`../data/json/${dateStr}.json`);
+            this.data = await response.json();
+
+            // Update last updated text
+            const lastUpdated = document.getElementById('lastUpdated');
+            lastUpdated.textContent = `Last updated: ${this.formatDateForDisplay(dateStr)}`;
+
+            return this.data;
+        } catch (error) {
+            console.error('Error loading data:', error);
+            return null;
+        }
+    }
+
+    setupEventListeners() {
+        document.getElementById('dateSelect').addEventListener('change', async (e) => {
+            await this.loadData(e.target.value);
+            this.renderSummaryCards();
+            this.updateCharts();
+            const category = document.getElementById('categoryFilter').value;
+            this.renderTable(category);
+        });
+
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            this.renderTable(e.target.value);
+        });
+    }
+
+    getStatByOffense(offenseName) {
+        return this.data.crime_statistics.find(
+            stat => stat.offense_type.toLowerCase() === offenseName.toLowerCase()
+        );
+    }
+
+    renderSummaryCards() {
+        if (!this.data) return;
+
+        // Total Crime
+        const totalCrime = this.getStatByOffense('Total Crime');
+        if (totalCrime) {
+            document.getElementById('totalCrime7').textContent = totalCrime.seven_day_total;
+            document.getElementById('totalCrimeYTD').textContent = totalCrime.ytd_2026;
+            document.getElementById('totalCrimeChange').innerHTML =
+                this.formatChange(totalCrime.ytd_2026 - totalCrime.ytd_2025);
+        }
+
+        // Violent Crime
+        const violentCrime = this.getStatByOffense('Violent Crime Total');
+        if (violentCrime) {
+            document.getElementById('violentCrime7').textContent = violentCrime.seven_day_total;
+            document.getElementById('violentCrimeYTD').textContent = violentCrime.ytd_2026;
+            document.getElementById('violentCrimeChange').innerHTML =
+                this.formatChange(violentCrime.ytd_2026 - violentCrime.ytd_2025);
+        }
+
+        // Property Crime
+        const propertyCrime = this.getStatByOffense('Property Crime Total');
+        if (propertyCrime) {
+            document.getElementById('propertyCrime7').textContent = propertyCrime.seven_day_total;
+            document.getElementById('propertyCrimeYTD').textContent = propertyCrime.ytd_2026;
+            document.getElementById('propertyCrimeChange').innerHTML =
+                this.formatChange(propertyCrime.ytd_2026 - propertyCrime.ytd_2025);
+        }
+
+        // Homicides (Murder)
+        const homicides = this.getStatByOffense('Murder');
+        if (homicides) {
+            document.getElementById('homicide7').textContent = homicides.seven_day_total;
+            document.getElementById('homicideYTD').textContent = homicides.ytd_2026;
+            document.getElementById('homicideChange').innerHTML =
+                this.formatChange(homicides.ytd_2026 - homicides.ytd_2025);
+        }
+    }
+
+    formatChange(value) {
+        if (value === 0) {
+            return '<span class="change-badge neutral">No Change</span>';
+        } else if (value < 0) {
+            return `<span class="change-badge positive arrow-down">${value}</span>`;
+        } else {
+            return `<span class="change-badge negative arrow-up">+${value}</span>`;
+        }
+    }
+
+    renderCharts() {
+        this.renderYTDOverallChart();
+        this.renderYTDHighProfileChart();
+        this.renderYTDPropertyChart();
+        this.renderSevenDayComparisonChart();
+        this.renderDailyBreakdownChart();
+    }
+
+    updateCharts() {
+        Object.values(this.charts).forEach(chart => chart.destroy());
+        this.charts = {};
+        this.renderCharts();
+    }
+
+    renderYTDOverallChart() {
+        const ctx = document.getElementById('ytdOverallChart').getContext('2d');
+
+        const totalCrime = this.getStatByOffense('Total Crime');
+        const violentCrime = this.getStatByOffense('Violent Crime Total');
+        const propertyCrime = this.getStatByOffense('Property Crime Total');
+
+        this.charts.ytdOverall = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Crime', 'Violent Crime', 'Property Crime'],
+                datasets: [{
+                    label: '2026 YTD',
+                    data: [totalCrime?.ytd_2026 || 0, violentCrime?.ytd_2026 || 0, propertyCrime?.ytd_2026 || 0],
+                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
+                    borderColor: 'rgba(30, 64, 175, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2025 YTD',
+                    data: [totalCrime?.ytd_2025 || 0, violentCrime?.ytd_2025 || 0, propertyCrime?.ytd_2025 || 0],
+                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const index = context.dataIndex;
+                                if (datasetIndex === 0) {
+                                    const current = context.parsed.y;
+                                    const previous = context.chart.data.datasets[1].data[index];
+                                    const change = current - previous;
+                                    const pct = previous > 0 ? ((change / previous) * 100).toFixed(1) : 0;
+                                    return `Change: ${change} (${pct}%)`;
+                                }
+                                return '';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    renderYTDHighProfileChart() {
+        const ctx = document.getElementById('ytdHighProfileChart').getContext('2d');
+
+        const offenses = ['Murder', 'Robbery', 'Carjacking', 'Non-Fatal Shooting'];
+        const stats = offenses.map(o => this.getStatByOffense(o));
+
+        this.charts.ytdHighProfile = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: offenses,
+                datasets: [{
+                    label: '2026 YTD',
+                    data: stats.map(s => s?.ytd_2026 || 0),
+                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
+                    borderColor: 'rgba(30, 64, 175, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2025 YTD',
+                    data: stats.map(s => s?.ytd_2025 || 0),
+                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    renderYTDPropertyChart() {
+        const ctx = document.getElementById('ytdPropertyChart').getContext('2d');
+
+        const offenses = ['Burglary', 'Larceny', 'Stolen Vehicle'];
+        const stats = offenses.map(o => this.getStatByOffense(o));
+
+        this.charts.ytdProperty = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: offenses,
+                datasets: [{
+                    label: '2026 YTD',
+                    data: stats.map(s => s?.ytd_2026 || 0),
+                    backgroundColor: 'rgba(30, 64, 175, 0.8)',
+                    borderColor: 'rgba(30, 64, 175, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2025 YTD',
+                    data: stats.map(s => s?.ytd_2025 || 0),
+                    backgroundColor: 'rgba(220, 38, 38, 0.8)',
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    renderSevenDayComparisonChart() {
+        const ctx = document.getElementById('sevenDayComparisonChart').getContext('2d');
+
+        const violentCrime = this.getStatByOffense('Violent Crime Total');
+        const propertyCrime = this.getStatByOffense('Property Crime Total');
+
+        this.charts.sevenDay = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Violent Crime', 'Property Crime'],
+                datasets: [{
+                    label: 'Last 7 Days',
+                    data: [violentCrime?.seven_day_total || 0, propertyCrime?.seven_day_total || 0],
+                    backgroundColor: 'rgba(5, 150, 105, 0.8)',
+                    borderColor: 'rgba(5, 150, 105, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Previous 7 Days',
+                    data: [violentCrime?.prev_seven_day_total || 0, propertyCrime?.prev_seven_day_total || 0],
+                    backgroundColor: 'rgba(217, 119, 6, 0.8)',
+                    borderColor: 'rgba(217, 119, 6, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const index = context.dataIndex;
+                                if (datasetIndex === 0) {
+                                    const current = context.parsed.y;
+                                    const previous = context.chart.data.datasets[1].data[index];
+                                    const change = current - previous;
+                                    return `Change: ${change > 0 ? '+' : ''}${change}`;
+                                }
+                                return '';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    renderDailyBreakdownChart() {
+        const ctx = document.getElementById('dailyBreakdownChart').getContext('2d');
+
+        const totalCrime = this.getStatByOffense('Total Crime');
+        const violentCrime = this.getStatByOffense('Violent Crime Total');
+        const propertyCrime = this.getStatByOffense('Property Crime Total');
+
+        if (!totalCrime) return;
+
+        // Extract daily data from the last 7 days
+        const dailyFields = Object.keys(totalCrime).filter(key => key.match(/^\d{4}-\d{2}-\d{2}$/));
+        const labels = dailyFields.map(date => {
+            const d = new Date(date);
+            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        });
+
+        const totalData = dailyFields.map(field => totalCrime[field]);
+        const violentData = dailyFields.map(field => violentCrime[field]);
+        const propertyData = dailyFields.map(field => propertyCrime[field]);
+
+        this.charts.dailyBreakdown = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Crime',
+                    data: totalData,
+                    borderColor: 'rgba(30, 64, 175, 1)',
+                    backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'Violent Crime',
+                    data: violentData,
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'Property Crime',
+                    data: propertyData,
+                    borderColor: 'rgba(5, 150, 105, 1)',
+                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    }
+
+    renderTable(category) {
+        if (!this.data) return;
+
+        const tbody = document.getElementById('crimeTableBody');
+        const stats = this.filterStatsByCategory(category);
+
+        tbody.innerHTML = stats.map(stat => {
+            // Skip the header row
+            if (typeof stat.seven_day_total === 'string') return '';
+
+            const ytdChange = stat.ytd_2026 - stat.ytd_2025;
+            const weekChange = stat.seven_day_total - stat.prev_seven_day_total;
+
+            return `
+                <tr>
+                    <td class="offense-name">${stat.offense_type}</td>
+                    <td class="num-cell">${stat.seven_day_total}</td>
+                    <td class="num-cell">${stat.prev_seven_day_total}</td>
+                    <td class="num-cell">${this.formatTableChange(weekChange)}</td>
+                    <td class="num-cell"><strong>${stat.ytd_2026}</strong></td>
+                    <td class="num-cell">${stat.ytd_2025}</td>
+                    <td class="num-cell">${this.formatTableChange(ytdChange)}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    formatTableChange(value) {
+        if (value === 0) {
+            return '<span style="color: #64748b;">0</span>';
+        } else if (value < 0) {
+            return `<span style="color: #059669; font-weight: 600;">${value}</span>`;
+        } else {
+            return `<span style="color: #dc2626; font-weight: 600;">+${value}</span>`;
+        }
+    }
+
+    filterStatsByCategory(category) {
+        if (!this.data) return [];
+
+        const highProfileOffenses = [
+            'Murder', 'Robbery', 'Carjacking', 'Non-Fatal Shooting',
+            'Assault', 'Sex Offense', 'Rape'
+        ];
+
+        const violentOffenses = [
+            'Murder', 'Sex Offense', 'Rape', 'Fondling', 'Robbery',
+            'Commercial Robbery', 'Residential Robbery', 'Citizen Robbery',
+            'Carjacking', 'Assault', 'Non-Fatal Shooting',
+            'Assault (Other Weapon)', 'Assault (No Weapon)',
+            'Violent Crime Total'
+        ];
+
+        const propertyOffenses = [
+            'Burglary', 'Commercial Burglary', 'Residential Burglary',
+            'Other Burglary', 'Larceny', 'Theft from Auto', 'Other Theft',
+            'Stolen Vehicle', 'Property Crime Total'
+        ];
+
+        return this.data.crime_statistics.filter(stat => {
+            // Skip header rows
+            if (typeof stat.seven_day_total === 'string') return false;
+
+            switch (category) {
+                case 'violent':
+                    return violentOffenses.includes(stat.offense_type);
+                case 'property':
+                    return propertyOffenses.includes(stat.offense_type);
+                case 'high-profile':
+                    return highProfileOffenses.includes(stat.offense_type);
+                case 'all':
+                default:
+                    return true;
+            }
+        });
+    }
+}
+
+// Initialize dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new CrimeDashboard();
+});

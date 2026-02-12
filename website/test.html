@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Validation Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            line-height: 1.6;
+        }
+        h1 { color: #1e40af; }
+        .status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .success { background: #dcfce7; color: #059669; }
+        .error { background: #fee2e2; color: #dc2626; }
+        .info { background: #dbeafe; color: #1e40af; }
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .test-item {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crime Statistics Dashboard - Data Validation</h1>
+    <p>This page tests if your data files are accessible and properly formatted.</p>
+
+    <div id="results"></div>
+
+    <script>
+        async function runTests() {
+            const results = document.getElementById('results');
+            let html = '';
+
+            // Test 1: Check for data files
+            html += '<div class="test-item"><h3>Test 1: Data File Availability</h3>';
+            try {
+                const dates = [];
+                const today = new Date();
+
+                for (let i = 0; i < 10; i++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - i);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const dateStr = `${year}${month}${day}`;
+
+                    try {
+                        const response = await fetch(`../data/json/${dateStr}.json`);
+                        if (response.ok) {
+                            dates.push(dateStr);
+                        }
+                    } catch (e) {
+                        // File doesn't exist
+                    }
+                }
+
+                if (dates.length > 0) {
+                    html += `<div class="status success">✓ Found ${dates.length} data files</div>`;
+                    html += `<p>Available dates: ${dates.join(', ')}</p>`;
+                } else {
+                    html += '<div class="status error">✗ No data files found in ../data/json/</div>';
+                    html += '<p>Please ensure JSON files exist in the data/json directory.</p>';
+                }
+            } catch (error) {
+                html += `<div class="status error">✗ Error checking files: ${error.message}</div>`;
+            }
+            html += '</div>';
+
+            // Test 2: Load and validate latest data
+            html += '<div class="test-item"><h3>Test 2: Data Structure Validation</h3>';
+            try {
+                const today = new Date();
+                let latestData = null;
+                let latestDate = null;
+
+                for (let i = 0; i < 10; i++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - i);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const dateStr = `${year}${month}${day}`;
+
+                    try {
+                        const response = await fetch(`../data/json/${dateStr}.json`);
+                        if (response.ok) {
+                            latestData = await response.json();
+                            latestDate = dateStr;
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+
+                if (latestData) {
+                    html += `<div class="status success">✓ Successfully loaded data from ${latestDate}</div>`;
+                    html += `<p><strong>Report Date:</strong> ${latestData.report_date}</p>`;
+                    html += `<p><strong>Total Offense Types:</strong> ${latestData.crime_statistics?.length || 0}</p>`;
+
+                    // Check for key offense types
+                    const totalCrime = latestData.crime_statistics?.find(s => s.offense_type === 'Total Crime');
+                    const violentCrime = latestData.crime_statistics?.find(s => s.offense_type === 'Violent Crime Total');
+                    const propertyCrime = latestData.crime_statistics?.find(s => s.offense_type === 'Property Crime Total');
+
+                    if (totalCrime && violentCrime && propertyCrime) {
+                        html += '<div class="status success">✓ All required offense types found</div>';
+                        html += '<p><strong>Sample Data:</strong></p>';
+                        html += '<ul>';
+                        html += `<li>Total Crime (7-day): ${totalCrime.seven_day_total}</li>`;
+                        html += `<li>Violent Crime YTD 2026: ${violentCrime.ytd_2026}</li>`;
+                        html += `<li>Property Crime YTD 2026: ${propertyCrime.ytd_2026}</li>`;
+                        html += '</ul>';
+                    } else {
+                        html += '<div class="status error">✗ Missing required offense types</div>';
+                    }
+
+                    // Show raw data sample
+                    html += '<details><summary>View Raw Data Sample</summary>';
+                    html += `<pre>${JSON.stringify(latestData.crime_statistics[0], null, 2)}</pre>`;
+                    html += '</details>';
+                } else {
+                    html += '<div class="status error">✗ Could not load any data files</div>';
+                }
+            } catch (error) {
+                html += `<div class="status error">✗ Error loading data: ${error.message}</div>`;
+            }
+            html += '</div>';
+
+            // Test 3: Chart.js availability
+            html += '<div class="test-item"><h3>Test 3: Chart.js Library</h3>';
+            html += '<div class="status info">ℹ Chart.js loads on the main dashboard page</div>';
+            html += '<p>The main dashboard uses Chart.js from CDN. Ensure you have internet connectivity.</p>';
+            html += '</div>';
+
+            // Test 4: Browser compatibility
+            html += '<div class="test-item"><h3>Test 4: Browser Compatibility</h3>';
+            const hasES6 = typeof Promise !== 'undefined';
+            const hasFetch = typeof fetch !== 'undefined';
+            const hasLocalStorage = typeof localStorage !== 'undefined';
+
+            if (hasES6 && hasFetch && hasLocalStorage) {
+                html += '<div class="status success">✓ Browser supports all required features</div>';
+            } else {
+                html += '<div class="status error">✗ Browser missing required features</div>';
+                if (!hasES6) html += '<p>Missing: ES6 Promise support</p>';
+                if (!hasFetch) html += '<p>Missing: Fetch API</p>';
+                if (!hasLocalStorage) html += '<p>Missing: LocalStorage</p>';
+            }
+            html += '</div>';
+
+            // Final recommendation
+            html += '<div class="test-item">';
+            html += '<h3>Next Steps</h3>';
+            html += '<p>If all tests passed, you can now:</p>';
+            html += '<ol>';
+            html += '<li>Open <a href="index.html" style="color: #1e40af; font-weight: 600;">index.html</a> to view the dashboard</li>';
+            html += '<li>Or run <code>./serve.sh</code> and visit <code>http://localhost:8000</code></li>';
+            html += '</ol>';
+            html += '</div>';
+
+            results.innerHTML = html;
+        }
+
+        runTests();
+    </script>
+</body>
+</html>
