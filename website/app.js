@@ -248,6 +248,8 @@ class CrimeDashboard {
         const violentCrime = this.getStatByOffense('Violent Crime Total');
         const propertyCrime = this.getStatByOffense('Property Crime Total');
 
+        const stats = [totalCrime, violentCrime, propertyCrime];
+
         this.charts.ytdOverall = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -275,6 +277,9 @@ class CrimeDashboard {
                     },
                     tooltip: {
                         callbacks: {
+                            title: function(context) {
+                                return context[0].label;
+                            },
                             afterLabel: function(context) {
                                 const datasetIndex = context.datasetIndex;
                                 const index = context.dataIndex;
@@ -283,7 +288,8 @@ class CrimeDashboard {
                                     const previous = context.chart.data.datasets[1].data[index];
                                     const change = current - previous;
                                     const pct = previous > 0 ? ((change / previous) * 100).toFixed(1) : 0;
-                                    return `Change: ${change} (${pct}%)`;
+                                    const sign = change > 0 ? '+' : '';
+                                    return `YTD Change: ${sign}${pct}% (${sign}${change})`;
                                 }
                                 return '';
                             }
@@ -297,6 +303,17 @@ class CrimeDashboard {
                 }
             }
         });
+
+        // Add percentage labels above 2026 bars
+        this.addPercentageLabels(ctx, stats);
+    }
+
+    addPercentageLabels(ctx, stats) {
+        // Store stats for later use in drawing labels
+        ctx.canvas.dataset.stats = JSON.stringify(stats.map(s => ({
+            ytd_2026: s?.ytd_2026 || 0,
+            ytd_2025: s?.ytd_2025 || 0
+        })));
     }
 
     renderYTDHighProfileChart() {
@@ -329,6 +346,23 @@ class CrimeDashboard {
                 plugins: {
                     legend: {
                         position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const index = context.dataIndex;
+                                if (datasetIndex === 0) {
+                                    const current = context.parsed.y;
+                                    const previous = context.chart.data.datasets[1].data[index];
+                                    const change = current - previous;
+                                    const pct = previous > 0 ? ((change / previous) * 100).toFixed(1) : (current > 0 ? 100 : 0);
+                                    const sign = change > 0 ? '+' : '';
+                                    return `YTD Change: ${sign}${pct}% (${sign}${change})`;
+                                }
+                                return '';
+                            }
+                        }
                     }
                 },
                 scales: {
@@ -370,6 +404,23 @@ class CrimeDashboard {
                 plugins: {
                     legend: {
                         position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const index = context.dataIndex;
+                                if (datasetIndex === 0) {
+                                    const current = context.parsed.y;
+                                    const previous = context.chart.data.datasets[1].data[index];
+                                    const change = current - previous;
+                                    const pct = previous > 0 ? ((change / previous) * 100).toFixed(1) : (current > 0 ? 100 : 0);
+                                    const sign = change > 0 ? '+' : '';
+                                    return `YTD Change: ${sign}${pct}% (${sign}${change})`;
+                                }
+                                return '';
+                            }
+                        }
                     }
                 },
                 scales: {
