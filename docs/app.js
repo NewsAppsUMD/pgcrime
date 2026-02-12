@@ -44,8 +44,24 @@ class CrimeDashboard {
 
     async loadAvailableDates() {
         try {
-            // Try to load dates from a manifest file or scan directory
-            // For now, we'll try to load the most recent files
+            // Try to load from manifest file first (more reliable for static hosting)
+            try {
+                const manifestResponse = await fetch(`${this.dataPath}manifest.json`);
+                if (manifestResponse.ok) {
+                    const manifest = await manifestResponse.json();
+                    this.availableDates = manifest.files
+                        .map(f => f.replace('.json', ''))
+                        .sort()
+                        .reverse();
+                    this.populateDateSelector();
+                    console.log('Loaded dates from manifest:', this.availableDates);
+                    return;
+                }
+            } catch (e) {
+                console.log('Manifest not found, falling back to file probing');
+            }
+
+            // Fallback: try to load the most recent files
             const dates = [];
             const today = new Date();
 

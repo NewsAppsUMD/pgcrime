@@ -38,7 +38,11 @@ jobs:
           uv run download_crime_report.py
         env:
           PYTHONUNBUFFERED: 1
-      
+
+      - name: Update manifest
+        run: |
+          python3 update_manifest.py
+
       - name: Commit and push if changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
