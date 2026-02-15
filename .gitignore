@@ -48,6 +48,9 @@ logs/*.log
 *~
 .DS_Store
 
+# Claude Code
+.claude/
+
 # Temporary files
 *.tmp
 *.temp
