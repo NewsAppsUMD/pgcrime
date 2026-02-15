@@ -43,12 +43,17 @@ jobs:
         run: |
           python3 update_manifest.py
 
+      - name: Copy data to docs for GitHub Pages
+        run: |
+          mkdir -p docs/data/json
+          cp data/json/*.json docs/data/json/
+
       - name: Commit and push if changes
         id: commit
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/pdf/ data/json/ logs/
+          git add data/pdf/ data/json/ docs/data/json/ logs/
           if git diff --staged --quiet; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
