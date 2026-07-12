@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prince George's County Crime Statistics</title>
+    <link rel="alternate" type="application/rss+xml" title="PG County Crime Alerts" href="alerts.xml">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -345,6 +346,82 @@
             content: '↓';
             margin-right: 0.25rem;
         }
+
+        .briefing-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .briefing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .briefing-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--gold);
+        }
+
+        .briefing-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .briefing-memo p {
+            margin-bottom: 0.75rem;
+        }
+
+        .briefing-caveats {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .alert-item {
+            padding: 0.75rem 1rem;
+            border-left: 4px solid var(--border);
+            background: var(--bg-light);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .alert-item.severity-high { border-left-color: var(--danger); }
+        .alert-item.severity-medium { border-left-color: var(--gold); }
+        .alert-item.severity-info { border-left-color: var(--text-muted); }
+
+        .alert-headline {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .rss-link {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--primary);
+            text-decoration: none;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -357,6 +434,19 @@
     </div>
 
     <div class="container">
+        <!-- Morning Briefing + Alerts -->
+        <div class="briefing-grid" id="briefingSection" style="display: none;">
+            <div class="briefing-card">
+                <h2>Today's Briefing</h2>
+                <div class="briefing-memo" id="briefingMemo"></div>
+                <div class="briefing-caveats" id="briefingCaveats"></div>
+            </div>
+            <div class="briefing-card">
+                <h2>Recent Alerts <a class="rss-link" href="alerts.xml">RSS ↗</a></h2>
+                <div id="alertsList"></div>
+            </div>
+        </div>
+
         <!-- Summary Cards -->
         <div class="summary-cards">
             <div class="card highlight-card">
@@ -537,6 +627,13 @@
         <div style="margin-top: 4rem; padding: 2rem 0; border-top: 2px solid var(--border); text-align: center;">
             <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">
                 Data source: <a href="https://dailycrime.princegeorgescountymd.gov/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;">Prince George's County Police Department Daily Crime Reports</a>
+            </p>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                Download the data:
+                <a href="https://github.com/NewsAppsUMD/pgcrime/blob/main/data/daily_counts.csv" style="color: var(--primary);">daily counts</a> ·
+                <a href="https://github.com/NewsAppsUMD/pgcrime/blob/main/data/report_metrics.csv" style="color: var(--primary);">report metrics</a> ·
+                <a href="https://github.com/NewsAppsUMD/pgcrime/blob/main/data/revisions.csv" style="color: var(--primary);">revisions log</a> ·
+                <a href="alerts.xml" style="color: var(--primary);">alerts RSS</a>
             </p>
             <p style="font-size: 0.875rem; color: var(--text-muted);">
                 Created by Derek Willis, Philip Merrill College of Journalism, University of Maryland

@@ -1,0 +1,452 @@
+[
+  {
+    "id": "2026-07-09-dip-total-crime",
+    "report_date": "2026-07-09",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime at a recent low: 254 in the past 7 days",
+    "detail": "Total Crime: 254 reported in the 7 days ending Jul. 9, vs. an average of 291.8 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-07-09-dip-property-crime-total",
+    "report_date": "2026-07-09",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total at a recent low: 188 in the past 7 days",
+    "detail": "Property Crime Total: 188 reported in the 7 days ending Jul. 9, vs. an average of 227.6 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-07-09-spike-dv-assault-other-weapon",
+    "report_date": "2026-07-09",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "DV Assault (Other Weapon)",
+    "headline": "DV Assault (Other Weapon) spike: 7 in the past 7 days",
+    "detail": "DV Assault (Other Weapon): 7 reported in the 7 days ending Jul. 9, vs. an average of 2.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-07-08-streak-non-fatal-shooting",
+    "report_date": "2026-07-08",
+    "type": "streak",
+    "severity": "medium",
+    "offense_type": "Non-Fatal Shooting",
+    "headline": "13 days without a non-fatal shooting — longest stretch on record",
+    "detail": "No non-fatal shooting reports since Jun. 25, the longest such stretch since tracking began Feb. 8, 2026."
+  },
+  {
+    "id": "2026-07-08-dip-stolen-vehicle",
+    "report_date": "2026-07-08",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Stolen Vehicle",
+    "headline": "Stolen Vehicle at a recent low: 43 in the past 7 days",
+    "detail": "Stolen Vehicle: 43 reported in the 7 days ending Jul. 8, vs. an average of 66.9 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-07-08-dip-other-theft",
+    "report_date": "2026-07-08",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Other Theft",
+    "headline": "Other Theft at a recent low: 62 in the past 7 days",
+    "detail": "Other Theft: 62 reported in the 7 days ending Jul. 8, vs. an average of 85.6 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-07-08-spike-commercial-burglary",
+    "report_date": "2026-07-08",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "Commercial Burglary",
+    "headline": "Commercial Burglary spike: 8 in the past 7 days",
+    "detail": "Commercial Burglary: 8 reported in the 7 days ending Jul. 8, vs. an average of 4.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-07-07-record_high-domestic-violence",
+    "report_date": "2026-07-07",
+    "type": "record_high",
+    "severity": "medium",
+    "offense_type": "Domestic Violence",
+    "headline": "Domestic Violence: worst 7-day stretch on record (36)",
+    "detail": "The 36 domestic violence reports in the 7 days ending Jul. 7 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 35)."
+  },
+  {
+    "id": "2026-07-06-spike-dv-assault-no-weapon",
+    "report_date": "2026-07-06",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "DV Assault (No Weapon)",
+    "headline": "DV Assault (No Weapon) spike: 28 in the past 7 days",
+    "detail": "DV Assault (No Weapon): 28 reported in the 7 days ending Jul. 6, vs. an average of 21.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-07-06-spike-domestic-violence",
+    "report_date": "2026-07-06",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Domestic Violence",
+    "headline": "Domestic Violence spike: 31 in the past 7 days",
+    "detail": "Domestic Violence: 31 reported in the 7 days ending Jul. 6, vs. an average of 24.2 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-07-05-revision-murder",
+    "report_date": "2026-07-05",
+    "type": "revision",
+    "severity": "high",
+    "offense_type": "Murder",
+    "headline": "PGPD revised previously published figures: Murder",
+    "detail": "The Jul. 5 report restates earlier daily counts: Murder on Jul. 4: 0 -> 1. Reclassifications like these are worth asking the department about."
+  },
+  {
+    "id": "2026-07-02-spike-burglary",
+    "report_date": "2026-07-02",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Burglary",
+    "headline": "Burglary spike: 17 in the past 7 days",
+    "detail": "Burglary: 17 reported in the 7 days ending Jul. 2, vs. an average of 9.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-07-02-dip-assault-no-weapon",
+    "report_date": "2026-07-02",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Assault (No Weapon)",
+    "headline": "Assault (No Weapon) at a recent low: 12 in the past 7 days",
+    "detail": "Assault (No Weapon): 12 reported in the 7 days ending Jul. 2, vs. an average of 19.1 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-07-02-dip-assault",
+    "report_date": "2026-07-02",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Assault",
+    "headline": "Assault at a recent low: 19 in the past 7 days",
+    "detail": "Assault: 19 reported in the 7 days ending Jul. 2, vs. an average of 29.2 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-06-28-revision-murder",
+    "report_date": "2026-06-28",
+    "type": "revision",
+    "severity": "high",
+    "offense_type": "Murder",
+    "headline": "PGPD revised previously published figures: Murder",
+    "detail": "The Jun. 28 report restates earlier daily counts: Murder on Jun. 26: 0 -> 1. Reclassifications like these are worth asking the department about."
+  },
+  {
+    "id": "2026-06-28-milestone-total-crime",
+    "report_date": "2026-06-28",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime: 8000 for the year",
+    "detail": "Total Crime reports reached 8000 for 2026 as of Jun. 28. That is down 15% from this point in 2025 (9381)."
+  },
+  {
+    "id": "2026-06-27-record_high-theft-from-auto",
+    "report_date": "2026-06-27",
+    "type": "record_high",
+    "severity": "info",
+    "offense_type": "Theft from Auto",
+    "headline": "Theft from Auto: worst 7-day stretch on record (89)",
+    "detail": "The 89 theft from auto reports in the 7 days ending Jun. 27 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 87)."
+  },
+  {
+    "id": "2026-06-26-record_high-total-crime",
+    "report_date": "2026-06-26",
+    "type": "record_high",
+    "severity": "medium",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime: worst 7-day stretch on record (322)",
+    "detail": "The 322 total crime reports in the 7 days ending Jun. 26 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 317)."
+  },
+  {
+    "id": "2026-06-26-spike-total-crime",
+    "report_date": "2026-06-26",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime spike: 322 in the past 7 days",
+    "detail": "Total Crime: 322 reported in the 7 days ending Jun. 26, vs. an average of 280.2 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-26-spike-property-crime-total",
+    "report_date": "2026-06-26",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total spike: 260 in the past 7 days",
+    "detail": "Property Crime Total: 260 reported in the 7 days ending Jun. 26, vs. an average of 217.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-26-spike-stolen-vehicle",
+    "report_date": "2026-06-26",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Stolen Vehicle",
+    "headline": "Stolen Vehicle spike: 82 in the past 7 days",
+    "detail": "Stolen Vehicle: 82 reported in the 7 days ending Jun. 26, vs. an average of 62.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-26-spike-theft-from-auto",
+    "report_date": "2026-06-26",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "Theft from Auto",
+    "headline": "Theft from Auto spike: 87 in the past 7 days",
+    "detail": "Theft from Auto: 87 reported in the 7 days ending Jun. 26, vs. an average of 60.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-23-milestone-property-crime-total",
+    "report_date": "2026-06-23",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total: 6000 for the year",
+    "detail": "Property Crime Total reports reached 6043 for 2026 as of Jun. 23. That is down 17% from this point in 2025 (7250)."
+  },
+  {
+    "id": "2026-06-22-spike-burglary",
+    "report_date": "2026-06-22",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Burglary",
+    "headline": "Burglary spike: 15 in the past 7 days",
+    "detail": "Burglary: 15 reported in the 7 days ending Jun. 22, vs. an average of 9.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-22-spike-dv-assault-no-weapon",
+    "report_date": "2026-06-22",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "DV Assault (No Weapon)",
+    "headline": "DV Assault (No Weapon) spike: 26 in the past 7 days",
+    "detail": "DV Assault (No Weapon): 26 reported in the 7 days ending Jun. 22, vs. an average of 21.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-22-spike-domestic-violence",
+    "report_date": "2026-06-22",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Domestic Violence",
+    "headline": "Domestic Violence spike: 30 in the past 7 days",
+    "detail": "Domestic Violence: 30 reported in the 7 days ending Jun. 22, vs. an average of 23.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-22-milestone-robbery",
+    "report_date": "2026-06-22",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Robbery",
+    "headline": "Robbery: 175 for the year",
+    "detail": "Robbery reports reached 175 for 2026 as of Jun. 22. That is down 51% from this point in 2025 (358)."
+  },
+  {
+    "id": "2026-06-20-spike-commercial-burglary",
+    "report_date": "2026-06-20",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "Commercial Burglary",
+    "headline": "Commercial Burglary spike: 6 in the past 7 days",
+    "detail": "Commercial Burglary: 6 reported in the 7 days ending Jun. 20, vs. an average of 3.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-20-spike-violent-crime-total",
+    "report_date": "2026-06-20",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Violent Crime Total",
+    "headline": "Violent Crime Total spike: 73 in the past 7 days",
+    "detail": "Violent Crime Total: 73 reported in the 7 days ending Jun. 20, vs. an average of 61.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-18-streak-non-fatal-shooting",
+    "report_date": "2026-06-18",
+    "type": "streak",
+    "severity": "medium",
+    "offense_type": "Non-Fatal Shooting",
+    "headline": "11 days without a non-fatal shooting — longest stretch on record",
+    "detail": "No non-fatal shooting reports since Jun. 7, the longest such stretch since tracking began Feb. 8, 2026."
+  },
+  {
+    "id": "2026-06-13-spike-assault-other-weapon",
+    "report_date": "2026-06-13",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "Assault (Other Weapon)",
+    "headline": "Assault (Other Weapon) spike: 10 in the past 7 days",
+    "detail": "Assault (Other Weapon): 10 reported in the 7 days ending Jun. 13, vs. an average of 6.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-12-streak-carjacking",
+    "report_date": "2026-06-12",
+    "type": "streak",
+    "severity": "medium",
+    "offense_type": "Carjacking",
+    "headline": "11 days without a carjacking — longest stretch on record",
+    "detail": "No carjacking reports since Jun. 1, the longest such stretch since tracking began Feb. 8, 2026."
+  },
+  {
+    "id": "2026-06-09-milestone-total-crime",
+    "report_date": "2026-06-09",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime: 7000 for the year",
+    "detail": "Total Crime reports reached 7057 for 2026 as of Jun. 9. That is down 15% from this point in 2025 (8304)."
+  },
+  {
+    "id": "2026-06-09-dip-total-crime",
+    "report_date": "2026-06-09",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime at a recent low: 242 in the past 7 days",
+    "detail": "Total Crime: 242 reported in the 7 days ending Jun. 9, vs. an average of 277.0 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-06-09-milestone-property-crime-total",
+    "report_date": "2026-06-09",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total: 5500 for the year",
+    "detail": "Property Crime Total reports reached 5514 for 2026 as of Jun. 9. That is down 17% from this point in 2025 (6643)."
+  },
+  {
+    "id": "2026-06-09-dip-property-crime-total",
+    "report_date": "2026-06-09",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total at a recent low: 183 in the past 7 days",
+    "detail": "Property Crime Total: 183 reported in the 7 days ending Jun. 9, vs. an average of 215.9 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-06-05-spike-violent-crime-total",
+    "report_date": "2026-06-05",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Violent Crime Total",
+    "headline": "Violent Crime Total spike: 71 in the past 7 days",
+    "detail": "Violent Crime Total: 71 reported in the 7 days ending Jun. 5, vs. an average of 59.4 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-05-record_high-dv-assault-no-weapon",
+    "report_date": "2026-06-05",
+    "type": "record_high",
+    "severity": "info",
+    "offense_type": "DV Assault (No Weapon)",
+    "headline": "DV Assault (No Weapon): worst 7-day stretch on record (33)",
+    "detail": "The 33 dv assault (no weapon) reports in the 7 days ending Jun. 5 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 30)."
+  },
+  {
+    "id": "2026-06-05-record_high-domestic-violence",
+    "report_date": "2026-06-05",
+    "type": "record_high",
+    "severity": "medium",
+    "offense_type": "Domestic Violence",
+    "headline": "Domestic Violence: worst 7-day stretch on record (35)",
+    "detail": "The 35 domestic violence reports in the 7 days ending Jun. 5 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 34)."
+  },
+  {
+    "id": "2026-06-05-spike-domestic-violence",
+    "report_date": "2026-06-05",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Domestic Violence",
+    "headline": "Domestic Violence spike: 35 in the past 7 days",
+    "detail": "Domestic Violence: 35 reported in the 7 days ending Jun. 5, vs. an average of 20.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-04-revision-murder",
+    "report_date": "2026-06-04",
+    "type": "revision",
+    "severity": "high",
+    "offense_type": "Murder",
+    "headline": "PGPD revised previously published figures: Murder",
+    "detail": "The Jun. 4 report restates earlier daily counts: Murder on Jun. 2: 0 -> 1. Reclassifications like these are worth asking the department about."
+  },
+  {
+    "id": "2026-06-04-milestone-violent-crime-total",
+    "report_date": "2026-06-04",
+    "type": "milestone",
+    "severity": "info",
+    "offense_type": "Violent Crime Total",
+    "headline": "Violent Crime Total: 1500 for the year",
+    "detail": "Violent Crime Total reports reached 1507 for 2026 as of Jun. 4. That is down 6% from this point in 2025 (1602)."
+  },
+  {
+    "id": "2026-06-04-spike-dv-assault-no-weapon",
+    "report_date": "2026-06-04",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "DV Assault (No Weapon)",
+    "headline": "DV Assault (No Weapon) spike: 30 in the past 7 days",
+    "detail": "DV Assault (No Weapon): 30 reported in the 7 days ending Jun. 4, vs. an average of 18.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-03-spike-stolen-vehicle",
+    "report_date": "2026-06-03",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Stolen Vehicle",
+    "headline": "Stolen Vehicle spike: 82 in the past 7 days",
+    "detail": "Stolen Vehicle: 82 reported in the 7 days ending Jun. 3, vs. an average of 60.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-02-spike-citizen-robbery",
+    "report_date": "2026-06-02",
+    "type": "spike",
+    "severity": "info",
+    "offense_type": "Citizen Robbery",
+    "headline": "Citizen Robbery spike: 8 in the past 7 days",
+    "detail": "Citizen Robbery: 8 reported in the 7 days ending Jun. 2, vs. an average of 3.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-01-spike-larceny",
+    "report_date": "2026-06-01",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Larceny",
+    "headline": "Larceny spike: 177 in the past 7 days",
+    "detail": "Larceny: 177 reported in the 7 days ending Jun. 1, vs. an average of 137.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-06-01-dip-assault",
+    "report_date": "2026-06-01",
+    "type": "dip",
+    "severity": "info",
+    "offense_type": "Assault",
+    "headline": "Assault at a recent low: 17 in the past 7 days",
+    "detail": "Assault: 17 reported in the 7 days ending Jun. 1, vs. an average of 29.6 per week over the prior 8 weeks — below every one of those weeks."
+  },
+  {
+    "id": "2026-05-30-spike-total-crime",
+    "report_date": "2026-05-30",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Total Crime",
+    "headline": "Total Crime spike: 308 in the past 7 days",
+    "detail": "Total Crime: 308 reported in the 7 days ending May. 30, vs. an average of 276.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  },
+  {
+    "id": "2026-05-30-record_high-property-crime-total",
+    "report_date": "2026-05-30",
+    "type": "record_high",
+    "severity": "medium",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total: worst 7-day stretch on record (256)",
+    "detail": "The 256 property crime total reports in the 7 days ending May. 30 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 255)."
+  },
+  {
+    "id": "2026-05-30-spike-property-crime-total",
+    "report_date": "2026-05-30",
+    "type": "spike",
+    "severity": "medium",
+    "offense_type": "Property Crime Total",
+    "headline": "Property Crime Total spike: 256 in the past 7 days",
+    "detail": "Property Crime Total: 256 reported in the 7 days ending May. 30, vs. an average of 215.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD."
+  }
+]

@@ -34,19 +34,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Create deployment directory
-        run: |
-          mkdir -p _site
-
-          # Copy docs files excluding the data symlink
-          rsync -av --exclude='data' docs/ _site/
-
-          # Copy data directory (symlinks don't work in GitHub Pages)
-          mkdir -p _site/data
-          cp -r data/json _site/data/
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          # docs/data contains real files kept in sync by the daily workflow
+          path: docs
 
   # Deployment job
   deploy:

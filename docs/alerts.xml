@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Prince George's County Crime Alerts</title>
+    <link>https://newsappsumd.github.io/pgcrime/</link>
+    <description>Automated alerts from PGPD Daily Crime Report data: spikes, records, milestones, streaks and data revisions.</description>
+    <item>
+      <title>Total Crime at a recent low: 254 in the past 7 days</title>
+      <description>Total Crime: 254 reported in the 7 days ending Jul. 9, vs. an average of 291.8 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-09-dip-total-crime</guid>
+      <pubDate>Thu, 09 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Property Crime Total at a recent low: 188 in the past 7 days</title>
+      <description>Property Crime Total: 188 reported in the 7 days ending Jul. 9, vs. an average of 227.6 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-09-dip-property-crime-total</guid>
+      <pubDate>Thu, 09 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>DV Assault (Other Weapon) spike: 7 in the past 7 days</title>
+      <description>DV Assault (Other Weapon): 7 reported in the 7 days ending Jul. 9, vs. an average of 2.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-09-spike-dv-assault-other-weapon</guid>
+      <pubDate>Thu, 09 Jul 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>13 days without a non-fatal shooting — longest stretch on record</title>
+      <description>No non-fatal shooting reports since Jun. 25, the longest such stretch since tracking began Feb. 8, 2026.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-08-streak-non-fatal-shooting</guid>
+      <pubDate>Wed, 08 Jul 2026 14:00:00 GMT</pubDate>
+      <category>streak</category>
+    </item>
+    <item>
+      <title>Stolen Vehicle at a recent low: 43 in the past 7 days</title>
+      <description>Stolen Vehicle: 43 reported in the 7 days ending Jul. 8, vs. an average of 66.9 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-08-dip-stolen-vehicle</guid>
+      <pubDate>Wed, 08 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Other Theft at a recent low: 62 in the past 7 days</title>
+      <description>Other Theft: 62 reported in the 7 days ending Jul. 8, vs. an average of 85.6 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-08-dip-other-theft</guid>
+      <pubDate>Wed, 08 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Commercial Burglary spike: 8 in the past 7 days</title>
+      <description>Commercial Burglary: 8 reported in the 7 days ending Jul. 8, vs. an average of 4.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-08-spike-commercial-burglary</guid>
+      <pubDate>Wed, 08 Jul 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Domestic Violence: worst 7-day stretch on record (36)</title>
+      <description>The 36 domestic violence reports in the 7 days ending Jul. 7 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 35).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-07-record_high-domestic-violence</guid>
+      <pubDate>Tue, 07 Jul 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>DV Assault (No Weapon) spike: 28 in the past 7 days</title>
+      <description>DV Assault (No Weapon): 28 reported in the 7 days ending Jul. 6, vs. an average of 21.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-06-spike-dv-assault-no-weapon</guid>
+      <pubDate>Mon, 06 Jul 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Domestic Violence spike: 31 in the past 7 days</title>
+      <description>Domestic Violence: 31 reported in the 7 days ending Jul. 6, vs. an average of 24.2 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-06-spike-domestic-violence</guid>
+      <pubDate>Mon, 06 Jul 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>PGPD revised previously published figures: Murder</title>
+      <description>The Jul. 5 report restates earlier daily counts: Murder on Jul. 4: 0 -&gt; 1. Reclassifications like these are worth asking the department about.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-05-revision-murder</guid>
+      <pubDate>Sun, 05 Jul 2026 14:00:00 GMT</pubDate>
+      <category>revision</category>
+    </item>
+    <item>
+      <title>Burglary spike: 17 in the past 7 days</title>
+      <description>Burglary: 17 reported in the 7 days ending Jul. 2, vs. an average of 9.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-02-spike-burglary</guid>
+      <pubDate>Thu, 02 Jul 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Assault (No Weapon) at a recent low: 12 in the past 7 days</title>
+      <description>Assault (No Weapon): 12 reported in the 7 days ending Jul. 2, vs. an average of 19.1 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-02-dip-assault-no-weapon</guid>
+      <pubDate>Thu, 02 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Assault at a recent low: 19 in the past 7 days</title>
+      <description>Assault: 19 reported in the 7 days ending Jul. 2, vs. an average of 29.2 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-07-02-dip-assault</guid>
+      <pubDate>Thu, 02 Jul 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>PGPD revised previously published figures: Murder</title>
+      <description>The Jun. 28 report restates earlier daily counts: Murder on Jun. 26: 0 -&gt; 1. Reclassifications like these are worth asking the department about.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-28-revision-murder</guid>
+      <pubDate>Sun, 28 Jun 2026 14:00:00 GMT</pubDate>
+      <category>revision</category>
+    </item>
+    <item>
+      <title>Total Crime: 8000 for the year</title>
+      <description>Total Crime reports reached 8000 for 2026 as of Jun. 28. That is down 15% from this point in 2025 (9381).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-28-milestone-total-crime</guid>
+      <pubDate>Sun, 28 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>Theft from Auto: worst 7-day stretch on record (89)</title>
+      <description>The 89 theft from auto reports in the 7 days ending Jun. 27 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 87).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-27-record_high-theft-from-auto</guid>
+      <pubDate>Sat, 27 Jun 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>Total Crime: worst 7-day stretch on record (322)</title>
+      <description>The 322 total crime reports in the 7 days ending Jun. 26 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 317).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-26-record_high-total-crime</guid>
+      <pubDate>Fri, 26 Jun 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>Total Crime spike: 322 in the past 7 days</title>
+      <description>Total Crime: 322 reported in the 7 days ending Jun. 26, vs. an average of 280.2 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-26-spike-total-crime</guid>
+      <pubDate>Fri, 26 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Property Crime Total spike: 260 in the past 7 days</title>
+      <description>Property Crime Total: 260 reported in the 7 days ending Jun. 26, vs. an average of 217.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-26-spike-property-crime-total</guid>
+      <pubDate>Fri, 26 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Stolen Vehicle spike: 82 in the past 7 days</title>
+      <description>Stolen Vehicle: 82 reported in the 7 days ending Jun. 26, vs. an average of 62.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-26-spike-stolen-vehicle</guid>
+      <pubDate>Fri, 26 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Theft from Auto spike: 87 in the past 7 days</title>
+      <description>Theft from Auto: 87 reported in the 7 days ending Jun. 26, vs. an average of 60.0 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-26-spike-theft-from-auto</guid>
+      <pubDate>Fri, 26 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Property Crime Total: 6000 for the year</title>
+      <description>Property Crime Total reports reached 6043 for 2026 as of Jun. 23. That is down 17% from this point in 2025 (7250).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-23-milestone-property-crime-total</guid>
+      <pubDate>Tue, 23 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>Burglary spike: 15 in the past 7 days</title>
+      <description>Burglary: 15 reported in the 7 days ending Jun. 22, vs. an average of 9.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-22-spike-burglary</guid>
+      <pubDate>Mon, 22 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>DV Assault (No Weapon) spike: 26 in the past 7 days</title>
+      <description>DV Assault (No Weapon): 26 reported in the 7 days ending Jun. 22, vs. an average of 21.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-22-spike-dv-assault-no-weapon</guid>
+      <pubDate>Mon, 22 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Domestic Violence spike: 30 in the past 7 days</title>
+      <description>Domestic Violence: 30 reported in the 7 days ending Jun. 22, vs. an average of 23.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-22-spike-domestic-violence</guid>
+      <pubDate>Mon, 22 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Robbery: 175 for the year</title>
+      <description>Robbery reports reached 175 for 2026 as of Jun. 22. That is down 51% from this point in 2025 (358).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-22-milestone-robbery</guid>
+      <pubDate>Mon, 22 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>Commercial Burglary spike: 6 in the past 7 days</title>
+      <description>Commercial Burglary: 6 reported in the 7 days ending Jun. 20, vs. an average of 3.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-20-spike-commercial-burglary</guid>
+      <pubDate>Sat, 20 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Violent Crime Total spike: 73 in the past 7 days</title>
+      <description>Violent Crime Total: 73 reported in the 7 days ending Jun. 20, vs. an average of 61.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-20-spike-violent-crime-total</guid>
+      <pubDate>Sat, 20 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>11 days without a non-fatal shooting — longest stretch on record</title>
+      <description>No non-fatal shooting reports since Jun. 7, the longest such stretch since tracking began Feb. 8, 2026.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-18-streak-non-fatal-shooting</guid>
+      <pubDate>Thu, 18 Jun 2026 14:00:00 GMT</pubDate>
+      <category>streak</category>
+    </item>
+    <item>
+      <title>Assault (Other Weapon) spike: 10 in the past 7 days</title>
+      <description>Assault (Other Weapon): 10 reported in the 7 days ending Jun. 13, vs. an average of 6.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-13-spike-assault-other-weapon</guid>
+      <pubDate>Sat, 13 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>11 days without a carjacking — longest stretch on record</title>
+      <description>No carjacking reports since Jun. 1, the longest such stretch since tracking began Feb. 8, 2026.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-12-streak-carjacking</guid>
+      <pubDate>Fri, 12 Jun 2026 14:00:00 GMT</pubDate>
+      <category>streak</category>
+    </item>
+    <item>
+      <title>Total Crime: 7000 for the year</title>
+      <description>Total Crime reports reached 7057 for 2026 as of Jun. 9. That is down 15% from this point in 2025 (8304).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-09-milestone-total-crime</guid>
+      <pubDate>Tue, 09 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>Total Crime at a recent low: 242 in the past 7 days</title>
+      <description>Total Crime: 242 reported in the 7 days ending Jun. 9, vs. an average of 277.0 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-09-dip-total-crime</guid>
+      <pubDate>Tue, 09 Jun 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Property Crime Total: 5500 for the year</title>
+      <description>Property Crime Total reports reached 5514 for 2026 as of Jun. 9. That is down 17% from this point in 2025 (6643).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-09-milestone-property-crime-total</guid>
+      <pubDate>Tue, 09 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>Property Crime Total at a recent low: 183 in the past 7 days</title>
+      <description>Property Crime Total: 183 reported in the 7 days ending Jun. 9, vs. an average of 215.9 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-09-dip-property-crime-total</guid>
+      <pubDate>Tue, 09 Jun 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Violent Crime Total spike: 71 in the past 7 days</title>
+      <description>Violent Crime Total: 71 reported in the 7 days ending Jun. 5, vs. an average of 59.4 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-05-spike-violent-crime-total</guid>
+      <pubDate>Fri, 05 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>DV Assault (No Weapon): worst 7-day stretch on record (33)</title>
+      <description>The 33 dv assault (no weapon) reports in the 7 days ending Jun. 5 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 30).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-05-record_high-dv-assault-no-weapon</guid>
+      <pubDate>Fri, 05 Jun 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>Domestic Violence: worst 7-day stretch on record (35)</title>
+      <description>The 35 domestic violence reports in the 7 days ending Jun. 5 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 34).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-05-record_high-domestic-violence</guid>
+      <pubDate>Fri, 05 Jun 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>Domestic Violence spike: 35 in the past 7 days</title>
+      <description>Domestic Violence: 35 reported in the 7 days ending Jun. 5, vs. an average of 20.5 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-05-spike-domestic-violence</guid>
+      <pubDate>Fri, 05 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>PGPD revised previously published figures: Murder</title>
+      <description>The Jun. 4 report restates earlier daily counts: Murder on Jun. 2: 0 -&gt; 1. Reclassifications like these are worth asking the department about.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-04-revision-murder</guid>
+      <pubDate>Thu, 04 Jun 2026 14:00:00 GMT</pubDate>
+      <category>revision</category>
+    </item>
+    <item>
+      <title>Violent Crime Total: 1500 for the year</title>
+      <description>Violent Crime Total reports reached 1507 for 2026 as of Jun. 4. That is down 6% from this point in 2025 (1602).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-04-milestone-violent-crime-total</guid>
+      <pubDate>Thu, 04 Jun 2026 14:00:00 GMT</pubDate>
+      <category>milestone</category>
+    </item>
+    <item>
+      <title>DV Assault (No Weapon) spike: 30 in the past 7 days</title>
+      <description>DV Assault (No Weapon): 30 reported in the 7 days ending Jun. 4, vs. an average of 18.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-04-spike-dv-assault-no-weapon</guid>
+      <pubDate>Thu, 04 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Stolen Vehicle spike: 82 in the past 7 days</title>
+      <description>Stolen Vehicle: 82 reported in the 7 days ending Jun. 3, vs. an average of 60.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-03-spike-stolen-vehicle</guid>
+      <pubDate>Wed, 03 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Citizen Robbery spike: 8 in the past 7 days</title>
+      <description>Citizen Robbery: 8 reported in the 7 days ending Jun. 2, vs. an average of 3.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-02-spike-citizen-robbery</guid>
+      <pubDate>Tue, 02 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Larceny spike: 177 in the past 7 days</title>
+      <description>Larceny: 177 reported in the 7 days ending Jun. 1, vs. an average of 137.9 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-01-spike-larceny</guid>
+      <pubDate>Mon, 01 Jun 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Assault at a recent low: 17 in the past 7 days</title>
+      <description>Assault: 17 reported in the 7 days ending Jun. 1, vs. an average of 29.6 per week over the prior 8 weeks — below every one of those weeks.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-06-01-dip-assault</guid>
+      <pubDate>Mon, 01 Jun 2026 14:00:00 GMT</pubDate>
+      <category>dip</category>
+    </item>
+    <item>
+      <title>Total Crime spike: 308 in the past 7 days</title>
+      <description>Total Crime: 308 reported in the 7 days ending May. 30, vs. an average of 276.1 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-05-30-spike-total-crime</guid>
+      <pubDate>Sat, 30 May 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+    <item>
+      <title>Property Crime Total: worst 7-day stretch on record (256)</title>
+      <description>The 256 property crime total reports in the 7 days ending May. 30 are the most in any 7-day window since tracking began Feb. 8, 2026 (previous high: 255).</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-05-30-record_high-property-crime-total</guid>
+      <pubDate>Sat, 30 May 2026 14:00:00 GMT</pubDate>
+      <category>record_high</category>
+    </item>
+    <item>
+      <title>Property Crime Total spike: 256 in the past 7 days</title>
+      <description>Property Crime Total: 256 reported in the 7 days ending May. 30, vs. an average of 215.8 per week over the prior 8 weeks — and above every one of those weeks. Worth a call to PGPD.</description>
+      <link>https://newsappsumd.github.io/pgcrime/</link>
+      <guid isPermaLink="false">2026-05-30-spike-property-crime-total</guid>
+      <pubDate>Sat, 30 May 2026 14:00:00 GMT</pubDate>
+      <category>spike</category>
+    </item>
+  </channel>
+</rss>

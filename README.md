@@ -11,6 +11,11 @@ This project downloads PDF crime reports from https://dailycrime.princegeorgesco
 - **Automated Daily Downloads**: Scheduled to run once per day
 - **PDF Parsing**: Uses `pdfplumber` to extract text and tables from PDF reports
 - **Structured Output**: Generates clean JSON files with crime incident data
+- **Tidy Timeseries CSVs**: `build_timeseries.py` produces analysis-ready files in `data/`:
+  - `daily_counts.csv` — one row per date and offense (canonical daily counts)
+  - `report_metrics.csv` — 7-day and YTD totals/changes per report
+  - `revisions.csv` — every time a report quietly restated a previously published daily count
+- **Alerts & Morning Briefing**: `generate_alerts.py` flags spikes, record 7-day totals, YTD milestones, pace changes vs. last year, streaks, and data revisions. Output goes to the website (`docs/data/briefing.json`, `docs/data/alerts.json`), an RSS feed (`docs/alerts.xml`), GitHub issues (label `crime-alert`), and optionally Slack (set a `SLACK_WEBHOOK_URL` repository secret)
 - **CSV Export Option**: Convert JSON data to CSV format for analysis
 - **Date Tracking**: Extracts and includes the report date from the PDF header
 - **Error Handling**: Robust error handling for network issues and parsing failures

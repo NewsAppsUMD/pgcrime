@@ -7,6 +7,11 @@ on:
     - cron: '0 14 * * *'
   workflow_dispatch: # Allow manual triggering
 
+permissions:
+  contents: write
+  issues: write
+  actions: write # to dispatch the Pages deploy workflow
+
 jobs:
   download-and-parse:
     runs-on: ubuntu-latest
@@ -43,6 +48,17 @@ jobs:
         run: |
           python3 update_manifest.py
 
+      - name: Build tidy timeseries CSVs
+        run: |
+          python3 build_timeseries.py
+
+      - name: Generate alerts and briefing
+        id: alerts
+        run: |
+          python3 generate_alerts.py --slack-daily --issue-out /tmp/crime-alert
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Copy data to docs for GitHub Pages
         run: |
           mkdir -p docs/data/json
@@ -53,7 +69,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/pdf/ data/json/ docs/data/json/ logs/
+          git add data/ docs/ logs/
           if git diff --staged --quiet; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
@@ -61,6 +77,17 @@ jobs:
             git push
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: File alert issue
+        if: steps.commit.outputs.has_changes == 'true' && steps.alerts.outputs.new_alert_count != '0' && steps.alerts.outputs.new_alert_count != ''
+        run: |
+          gh label create crime-alert --color D93F0B --description "Automated crime data alert" || true
+          gh issue create \
+            --title "$(cat /tmp/crime-alert-title.txt)" \
+            --body-file /tmp/crime-alert-body.md \
+            --label crime-alert
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger Pages deployment
         if: steps.commit.outputs.has_changes == 'true'

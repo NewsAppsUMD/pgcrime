@@ -1,0 +1,16 @@
+{
+  "report_date": "2026-07-11",
+  "generated_at": "2026-07-12T15:58:25.543785+00:00",
+  "memo": [
+    "PGPD logged 255 crime reports in the 7 days ending Jul. 11, down 23% from the week before. Year to date: 8628, vs. 10069 at this point last year.",
+    "The past week breaks down to 66 violent and 189 property crime reports.",
+    "Year to date — murders: 23 (down 36% vs. 2025); carjackings: 33 (down 60% vs. 2025); non-fatal shootings: 67 (down 35% vs. 2025).",
+    "No homicides reported in the past 7 days."
+  ],
+  "alerts": [],
+  "caveats": [
+    "Figures cover crimes reported within PGPD's primary jurisdiction; municipal police departments (Laurel, Bowie, Greenbelt, Hyattsville and others) are not included.",
+    "Data is subject to change as incidents are investigated and reclassified.",
+    "PGPD's categories differ from FBI UCR definitions."
+  ]
+}

@@ -14,12 +14,18 @@ class CrimeDashboard {
     }
 
     async init() {
+        this.loadBriefing(); // independent of the main data load
         await this.loadAvailableDates();
         if (this.availableDates.length > 0) {
             await this.loadLatestData();
             this.setupEventListeners();
             this.renderSummaryCards();
-            this.renderCharts();
+            try {
+                this.renderCharts();
+            } catch (e) {
+                // Don't let a failed Chart.js CDN load take down the table too
+                console.error('Chart rendering failed:', e);
+            }
             this.renderTable('all');
         } else {
             this.showNoDataMessage();
@@ -42,6 +48,66 @@ class CrimeDashboard {
         console.error('No data files found at:', this.dataPath);
         console.log('Tried to load files with format: YYYYMMDD.json');
         console.log('Example: 20260212.json for February 12, 2026');
+    }
+
+    async loadBriefing() {
+        // briefing.json and alerts.json live one level above the json/ dir
+        const metaPath = this.dataPath.replace(/json\/?$/, '');
+        try {
+            const [briefingRes, alertsRes] = await Promise.all([
+                fetch(`${metaPath}briefing.json`),
+                fetch(`${metaPath}alerts.json`)
+            ]);
+            if (!briefingRes.ok) return;
+
+            const briefing = await briefingRes.json();
+            const alerts = alertsRes.ok ? await alertsRes.json() : [];
+            this.renderBriefing(briefing, alerts);
+        } catch (e) {
+            console.warn('Briefing unavailable:', e.message);
+        }
+    }
+
+    renderBriefing(briefing, alerts) {
+        const memo = document.getElementById('briefingMemo');
+        briefing.memo.forEach(text => {
+            const p = document.createElement('p');
+            p.textContent = text;
+            memo.appendChild(p);
+        });
+
+        const caveats = document.getElementById('briefingCaveats');
+        caveats.textContent = 'Notes: ' + briefing.caveats.join(' ');
+
+        const list = document.getElementById('alertsList');
+        alerts.slice(0, 8).forEach(alert => {
+            const item = document.createElement('div');
+            item.className = `alert-item severity-${alert.severity}`;
+
+            const meta = document.createElement('div');
+            meta.className = 'alert-meta';
+            const alertDate = new Date(alert.report_date + 'T12:00:00')
+                .toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            meta.textContent = `${alertDate} · ${alert.type.replace(/_/g, ' ')}`;
+
+            const headline = document.createElement('div');
+            headline.className = 'alert-headline';
+            headline.textContent = alert.headline;
+
+            const detail = document.createElement('div');
+            detail.className = 'alert-detail';
+            detail.textContent = alert.detail;
+
+            item.append(meta, headline, detail);
+            list.appendChild(item);
+        });
+        if (!alerts.length) {
+            const none = document.createElement('p');
+            none.textContent = 'No alerts yet.';
+            list.appendChild(none);
+        }
+
+        document.getElementById('briefingSection').style.display = '';
     }
 
     async loadAvailableDates() {
