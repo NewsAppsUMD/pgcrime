@@ -13,6 +13,7 @@ from dateutil import parser as date_parser
 import pdfplumber
 
 from config import DATE_PATTERNS, SKIP_EMPTY_ROWS, STRIP_WHITESPACE
+from crime_categories import categorize, clean_records, is_junk_row
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -133,6 +134,19 @@ def parse_crime_table(table: List[List[str]], report_year: Optional[int] = None)
         else:
             columns.append('')
 
+    # The table has two "+/-" and two "% Change" columns: the pair before the
+    # YTD columns compares 7-day totals week-over-week, the pair after them
+    # compares YTD years. Disambiguate so the second pair doesn't overwrite
+    # the first when the row is stored as a dict.
+    seen_ytd = False
+    for i, col in enumerate(columns):
+        if col.startswith('ytd_'):
+            seen_ytd = True
+        elif col == 'change':
+            columns[i] = 'ytd_change' if seen_ytd else 'weekly_change'
+        elif col == 'percent_change':
+            columns[i] = 'ytd_percent_change' if seen_ytd else 'weekly_percent_change'
+
     # Parse data rows (skip first 2 rows: title and header)
     records = []
     for row in table[2:]:
@@ -150,6 +164,10 @@ def parse_crime_table(table: List[List[str]], report_year: Optional[int] = None)
         if STRIP_WHITESPACE:
             offense_type = offense_type.strip()
 
+        # The PDF repeats its section-header row mid-table; skip it
+        if is_junk_row(offense_type):
+            continue
+
         record['offense_type'] = offense_type
 
         # Map remaining columns
@@ -161,8 +179,8 @@ def parse_crime_table(table: List[List[str]], report_year: Optional[int] = None)
                     if value is not None:
                         value_str = str(value).strip() if STRIP_WHITESPACE else str(value)
                         
-                        # Handle percent_change field specially
-                        if col_name == 'percent_change' and value_str:
+                        # Handle percent change fields specially
+                        if col_name.endswith('percent_change') and value_str:
                             # Strip +/- and % to get numeric value
                             numeric_str = value_str.replace('+', '').replace('%', '').strip()
                             try:
@@ -197,19 +215,20 @@ def calculate_summary(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         'total_offense_types': len(records),
         'violent_crimes': [],
         'property_crimes': [],
+        'total_rows': [],
+        'other': [],
     }
 
-    # Categorize crimes
-    violent_keywords = ['murder', 'sex', 'rape', 'assault', 'robbery', 'shooting', 'carjacking']
+    category_keys = {
+        'violent': 'violent_crimes',
+        'property': 'property_crimes',
+        'total': 'total_rows',
+        'other': 'other',
+    }
 
     for record in records:
-        offense_type = record.get('offense_type', '').lower()
-        is_violent = any(keyword in offense_type for keyword in violent_keywords)
-
-        if is_violent:
-            summary['violent_crimes'].append(offense_type)
-        else:
-            summary['property_crimes'].append(offense_type)
+        offense_type = record.get('offense_type', '')
+        summary[category_keys[categorize(offense_type)]].append(offense_type)
 
     summary['violent_crime_count'] = len(summary['violent_crimes'])
     summary['property_crime_count'] = len(summary['property_crimes'])
@@ -284,6 +303,9 @@ def parse_pdf(pdf_path: str) -> Dict[str, Any]:
                         logger.error(error_msg)
                         result['parse_errors'].append(error_msg)
 
+            # Drop artifact rows and the duplicated "Violent Crime Total"
+            all_records = clean_records(all_records)
+
             result['crime_statistics'] = all_records
             result['summary'] = calculate_summary(all_records)
 
@@ -295,39 +317,14 @@ def parse_pdf(pdf_path: str) -> Dict[str, Any]:
         result['parse_errors'].append(error_msg)
         raise
 
-    # Rename PDF file to include date if we have a valid report date
+    # Archiving/renaming the PDF is the caller's job (download_crime_report.py
+    # moves it into data/pdf/). Moving it here used to resolve data/pdf
+    # relative to the temp download path, stranding archived PDFs in /tmp on
+    # CI runners and breaking the caller's own archive step.
     if result['report_date']:
-        try:
-            date_str = result['report_date'].replace('-', '')  # Convert YYYY-MM-DD to YYYYMMDD
-            pdf_dir = os.path.dirname(pdf_path)
-            
-            # Determine the target directory (data/pdf)
-            if os.path.basename(pdf_dir) != 'pdf':
-                # Move to data/pdf directory
-                target_dir = os.path.join(os.path.dirname(pdf_path), 'data', 'pdf')
-            else:
-                # Already in the right directory
-                target_dir = pdf_dir
-            
-            # Create target directory if it doesn't exist
-            os.makedirs(target_dir, exist_ok=True)
-            
-            # Create new filename with date
-            new_filename = f"{date_str}.pdf"
-            new_path = os.path.join(target_dir, new_filename)
-            
-            # Only rename/move if the file doesn't already have the correct name and location
-            if pdf_path != new_path:
-                if os.path.exists(new_path):
-                    logger.warning(f"File {new_path} already exists, keeping original file")
-                else:
-                    os.rename(pdf_path, new_path)
-                    logger.info(f"Moved and renamed PDF to {new_path}")
-                    result['source_file'] = new_filename
-            else:
-                result['source_file'] = new_filename
-        except Exception as e:
-            logger.warning(f"Failed to rename/move PDF file: {e}")
+        result['source_file'] = result['report_date'].replace('-', '') + '.pdf'
+    else:
+        result['source_file'] = os.path.basename(pdf_path)
 
     return result
 
