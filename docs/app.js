@@ -4,7 +4,13 @@ class CrimeDashboard {
     constructor() {
         this.data = null;
         this.availableDates = [];
+        this.replayDates = [];
+        this.lastCheck = null;
         this.charts = {};
+        this.historicalChart = null;
+        this.timeseries = null;
+        this.dataCache = {};
+        this.replayTimer = null;
         // Configure data path - can be overridden by setting window.DATA_PATH
         this.dataPath = window.DATA_PATH || '../data/json/';
         console.log('Dashboard initialized');
@@ -16,13 +22,41 @@ class CrimeDashboard {
     async init() {
         await this.loadAvailableDates();
         if (this.availableDates.length > 0) {
-            await this.loadLatestData();
+            await this.loadTimeseries();
             this.setupEventListeners();
-            this.renderSummaryCards();
-            this.renderCharts();
-            this.renderTable('all');
+            this.setupReplayControls();
+            this.renderHistoricalTrendChart();
+            await this.showDate(this.availableDates[0]);
         } else {
             this.showNoDataMessage();
+        }
+    }
+
+    async loadTimeseries() {
+        try {
+            const response = await fetch(`${this.dataPath}timeseries.json`);
+            if (response.ok) {
+                this.timeseries = await response.json();
+            } else {
+                console.warn('Timeseries not available:', response.status);
+            }
+        } catch (e) {
+            console.warn('Timeseries fetch failed:', e.message);
+        }
+    }
+
+    async showDate(dateStr) {
+        await this.loadData(dateStr);
+        this.renderSummaryCards();
+        this.renderTrendSummary();
+        this.renderNotableAlerts();
+        this.updateCharts();
+        const category = document.getElementById('categoryFilter').value;
+        this.renderTable(category);
+        document.getElementById('dateSelect').value = dateStr;
+        const slider = document.getElementById('replaySlider');
+        if (slider) {
+            slider.value = this.replayDates.indexOf(dateStr);
         }
     }
 
@@ -58,6 +92,7 @@ class CrimeDashboard {
                         .map(f => f.replace('.json', ''))
                         .sort()
                         .reverse();
+                    this.lastCheck = manifest.last_check || null;
                     this.populateDateSelector();
                     console.log('Loaded dates from manifest:', this.availableDates);
                     return;
@@ -133,12 +168,22 @@ class CrimeDashboard {
 
     async loadData(dateStr) {
         try {
-            const response = await fetch(`${this.dataPath}${dateStr}.json`);
-            this.data = await response.json();
+            if (this.dataCache[dateStr]) {
+                this.data = this.dataCache[dateStr];
+            } else {
+                const response = await fetch(`${this.dataPath}${dateStr}.json`);
+                this.data = await response.json();
+                this.dataCache[dateStr] = this.data;
+            }
 
             // Update last updated text
             const lastUpdated = document.getElementById('lastUpdated');
-            lastUpdated.textContent = `Last updated: ${this.formatDateForDisplay(dateStr)}`;
+            let html = `Last updated: ${this.formatDateForDisplay(dateStr)}`;
+            // Only warn about missing reports when viewing the latest data
+            if (dateStr === this.availableDates[0]) {
+                html += this.getStalenessWarning(dateStr);
+            }
+            lastUpdated.innerHTML = html;
 
             return this.data;
         } catch (error) {
@@ -147,13 +192,248 @@ class CrimeDashboard {
         }
     }
 
+    getStalenessWarning(latestDateStr) {
+        // Reports are published with a one-day lag, so the newest report
+        // should normally be dated yesterday. Anything older means the
+        // county hasn't posted a new PDF.
+        const year = parseInt(latestDateStr.substring(0, 4));
+        const month = parseInt(latestDateStr.substring(4, 6)) - 1;
+        const day = parseInt(latestDateStr.substring(6, 8));
+        const latest = new Date(year, month, day);
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday.setHours(0, 0, 0, 0);
+
+        const missingDays = Math.round((yesterday - latest) / (1000 * 60 * 60 * 24));
+        if (missingDays <= 0) return '';
+
+        const checkedText = this.lastCheck
+            ? `last checked ${new Date(this.lastCheck).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
+            : 'checked daily';
+
+        return `<span class="staleness-warning">⚠️ No new report published in ${missingDays} day${missingDays === 1 ? '' : 's'} — the updater is still running (${checkedText}); the county has not posted a new PDF.</span>`;
+    }
+
+    renderTrendSummary() {
+        const el = document.getElementById('trendSummary');
+        if (!el || !this.data) return;
+
+        const total = this.getStatByOffense('Total Crime');
+        if (!total) return;
+
+        const weekPct = Number(this.calculatePercentChange(total.seven_day_total, total.prev_seven_day_total));
+        let weekText;
+        if (total.seven_day_total === total.prev_seven_day_total) {
+            weekText = `held steady at ${total.seven_day_total} incidents`;
+        } else {
+            const dir = total.seven_day_total > total.prev_seven_day_total ? 'up' : 'down';
+            weekText = `was ${dir} ${Math.abs(weekPct)}% from the prior week (${total.seven_day_total} vs ${total.prev_seven_day_total} incidents)`;
+        }
+
+        const ytdPct = Number(this.calculatePercentChange(total.ytd_2026, total.ytd_2025));
+        const ytdDir = total.ytd_2026 >= total.ytd_2025 ? 'above' : 'below';
+
+        // Biggest week-over-week mover among main offense categories
+        const excluded = new Set(['Total Crime', 'Violent Crime Total', 'Property Crime Total', 'DCR Offense - NON-VIOLENT']);
+        const seen = new Set();
+        let mover = null;
+        for (const s of this.data.crime_statistics) {
+            if (excluded.has(s.offense_type) || seen.has(s.offense_type)) continue;
+            seen.add(s.offense_type);
+            if (Math.max(s.seven_day_total, s.prev_seven_day_total) < 3) continue;
+            const pct = Math.abs(Number(this.calculatePercentChange(s.seven_day_total, s.prev_seven_day_total)));
+            if (!mover || pct > mover.absPct) {
+                mover = { name: s.offense_type, cur: s.seven_day_total, prev: s.prev_seven_day_total, absPct: pct };
+            }
+        }
+
+        const weekEnding = this.data.report_date
+            ? new Date(this.data.report_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+            : '';
+
+        let html = `<strong>Week ending ${weekEnding}:</strong> total crime ${weekText}. Year to date, total crime is running ${Math.abs(ytdPct)}% ${ytdDir} 2025.`;
+        if (mover) {
+            const mDir = mover.cur >= mover.prev ? 'up' : 'down';
+            html += ` Biggest mover: <strong>${mover.name}</strong>, ${mDir} ${Math.round(mover.absPct)}% week over week (${mover.cur} vs ${mover.prev}).`;
+        }
+        el.innerHTML = html;
+    }
+
+    renderNotableAlerts() {
+        const el = document.getElementById('alertsStrip');
+        if (!el || !this.data) return;
+
+        // High-profile offenses always alert on any week-over-week change.
+        const alwaysAlert = new Set(['Murder', 'Non-Fatal Shooting', 'Carjacking', 'Robbery']);
+        // Sub-categories and totals are excluded to avoid duplicate noise.
+        const excluded = new Set([
+            'Total Crime', 'Violent Crime Total', 'Property Crime Total', 'DCR Offense - NON-VIOLENT',
+            'Commercial Robbery', 'Residential Robbery', 'Citizen Robbery',
+            'Commercial Burglary', 'Residential Burglary', 'Other Burglary',
+            'DV Non-Fatal Shooting', 'DV Assault (Other Weapon)', 'DV Assault (No Weapon)',
+            'Assault (Other Weapon)', 'Assault (No Weapon)', 'Fondling', 'Rape'
+        ]);
+
+        const seen = new Set();
+        const alerts = [];
+        for (const s of this.data.crime_statistics) {
+            if (excluded.has(s.offense_type) || seen.has(s.offense_type)) continue;
+            seen.add(s.offense_type);
+            const diff = s.seven_day_total - s.prev_seven_day_total;
+            if (diff === 0) continue;
+            const pct = Math.abs(Number(this.calculatePercentChange(s.seven_day_total, s.prev_seven_day_total)));
+            const significant = pct >= 25 && Math.max(s.seven_day_total, s.prev_seven_day_total) >= 5;
+            if (alwaysAlert.has(s.offense_type) || significant) {
+                alerts.push({ name: s.offense_type, diff, cur: s.seven_day_total, prev: s.prev_seven_day_total });
+            }
+        }
+
+        alerts.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+
+        if (alerts.length === 0) {
+            el.innerHTML = '';
+            el.style.display = 'none';
+            return;
+        }
+
+        el.style.display = 'flex';
+        el.innerHTML = alerts.slice(0, 6).map(a => {
+            const up = a.diff > 0;
+            return `<span class="alert-badge ${up ? 'up' : 'down'}">${up ? '▲' : '▼'} ${a.name}: ${a.prev} → ${a.cur}</span>`;
+        }).join('');
+    }
+
+    renderHistoricalTrendChart() {
+        const canvas = document.getElementById('historicalTrendChart');
+        if (!canvas || !this.timeseries) return;
+
+        const ctx = canvas.getContext('2d');
+        const ts = this.timeseries;
+
+        const labels = ts.dates.map(d => {
+            const dt = new Date(d + 'T00:00:00');
+            return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        });
+        const getSeries = name => (ts.offenses[name] ? ts.offenses[name].seven_day_total : []);
+
+        this.historicalChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Crime',
+                    data: getSeries('Total Crime'),
+                    borderColor: 'rgba(0, 61, 165, 1)',
+                    backgroundColor: 'rgba(0, 61, 165, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 0
+                }, {
+                    label: 'Violent Crime',
+                    data: getSeries('Violent Crime Total'),
+                    borderColor: 'rgba(220, 38, 38, 1)',
+                    backgroundColor: 'rgba(220, 38, 38, 0.08)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 0
+                }, {
+                    label: 'Property Crime',
+                    data: getSeries('Property Crime Total'),
+                    borderColor: 'rgba(255, 184, 28, 1)',
+                    backgroundColor: 'rgba(255, 184, 28, 0.12)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                    x: { ticks: { maxTicksLimit: 16 } }
+                },
+                interaction: { mode: 'nearest', axis: 'x', intersect: false }
+            }
+        });
+    }
+
+    setupReplayControls() {
+        const slider = document.getElementById('replaySlider');
+        const btn = document.getElementById('replayBtn');
+        if (!slider || !btn) return;
+
+        // Chronological order: oldest report first.
+        this.replayDates = [...this.availableDates].reverse();
+        slider.min = 0;
+        slider.max = this.replayDates.length - 1;
+        slider.value = this.replayDates.length - 1;
+
+        slider.addEventListener('input', async (e) => {
+            this.stopReplay();
+            await this.showDate(this.replayDates[Number(e.target.value)]);
+        });
+
+        btn.addEventListener('click', () => {
+            if (this.replayTimer) {
+                this.stopReplay();
+            } else {
+                this.startReplay();
+            }
+        });
+    }
+
+    startReplay() {
+        const btn = document.getElementById('replayBtn');
+        const slider = document.getElementById('replaySlider');
+        let i = Number(slider.value);
+        if (i >= this.replayDates.length - 1) i = 0; // restart from the beginning
+
+        btn.textContent = '⏸ Pause';
+        btn.classList.add('playing');
+
+        // Prefetch all reports in the background so playback is smooth.
+        for (const d of this.replayDates) {
+            if (!this.dataCache[d]) {
+                fetch(`${this.dataPath}${d}.json`)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(j => { if (j) this.dataCache[d] = j; })
+                    .catch(() => {});
+            }
+        }
+
+        this.replayTimer = setInterval(async () => {
+            slider.value = i;
+            await this.showDate(this.replayDates[i]);
+            i++;
+            if (i >= this.replayDates.length) this.stopReplay();
+        }, 500);
+    }
+
+    stopReplay() {
+        if (this.replayTimer) {
+            clearInterval(this.replayTimer);
+            this.replayTimer = null;
+        }
+        const btn = document.getElementById('replayBtn');
+        if (btn) {
+            btn.textContent = '▶ Replay';
+            btn.classList.remove('playing');
+        }
+    }
+
     setupEventListeners() {
         document.getElementById('dateSelect').addEventListener('change', async (e) => {
-            await this.loadData(e.target.value);
-            this.renderSummaryCards();
-            this.updateCharts();
-            const category = document.getElementById('categoryFilter').value;
-            this.renderTable(category);
+            this.stopReplay();
+            await this.showDate(e.target.value);
         });
 
         document.getElementById('categoryFilter').addEventListener('change', (e) => {

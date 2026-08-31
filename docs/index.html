@@ -68,6 +68,82 @@
             opacity: 0.8;
         }
 
+        .staleness-warning {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fef3c7;
+        }
+
+        .trend-summary {
+            background: var(--bg-white);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .alerts-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-badge {
+            padding: 0.4rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .alert-badge.up {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert-badge.down {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .replay-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .replay-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .replay-btn.playing {
+            background: #dc2626;
+        }
+
+        #replaySlider {
+            flex: 1;
+        }
+
+        .replay-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -357,6 +433,10 @@
     </div>
 
     <div class="container">
+        <!-- Trend Summary & Notable Changes -->
+        <div class="trend-summary" id="trendSummary"></div>
+        <div class="alerts-strip" id="alertsStrip" style="display: none;"></div>
+
         <!-- Summary Cards -->
         <div class="summary-cards">
             <div class="card highlight-card">
@@ -487,6 +567,19 @@
             </div>
         </div>
 
+        <!-- Historical Trends -->
+        <h2 class="section-title">Historical Trends</h2>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">7-Day Totals Over Time</div>
+                <div class="chart-subtitle">Rolling 7-day totals across all published reports</div>
+            </div>
+            <div class="canvas-wrapper" style="height: 350px;">
+                <canvas id="historicalTrendChart"></canvas>
+            </div>
+        </div>
+
         <!-- Daily View Controls -->
         <h2 class="section-title">Daily Crime Statistics</h2>
 
@@ -508,6 +601,11 @@
                         <option value="high-profile">High-Profile Offenses</option>
                     </select>
                 </div>
+            </div>
+            <div class="replay-controls">
+                <button id="replayBtn" class="replay-btn">▶ Replay</button>
+                <input type="range" id="replaySlider" min="0" max="0" value="0">
+                <span class="replay-hint">Scrub or replay reports over time</span>
             </div>
         </div>
 

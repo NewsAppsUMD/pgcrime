@@ -6,6 +6,7 @@ This should be run after downloading new crime data.
 
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -13,10 +14,10 @@ def update_manifest():
     """Generate manifest.json from available JSON files."""
     data_dir = Path(__file__).parent / 'data' / 'json'
 
-    # Find all JSON files (excluding manifest itself)
+    # Find all JSON files (excluding manifest itself and derived files)
     json_files = sorted([
         f.name for f in data_dir.glob('*.json')
-        if f.name != 'manifest.json'
+        if f.name not in ('manifest.json', 'timeseries.json')
     ], reverse=True)
 
     if not json_files:
@@ -27,7 +28,11 @@ def update_manifest():
     manifest = {
         "files": json_files,
         "latest": json_files[0] if json_files else None,
-        "count": len(json_files)
+        "count": len(json_files),
+        # Timestamp of this updater run. The website uses this to tell users
+        # the difference between "the county hasn't published a new report"
+        # and "the updater is broken".
+        "last_check": datetime.now(timezone.utc).isoformat()
     }
 
     # Write manifest
