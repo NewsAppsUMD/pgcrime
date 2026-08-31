@@ -32,9 +32,16 @@ class CrimeDashboard {
         }
     }
 
+    // Fetch with revalidation so browsers don't serve stale cached JSON
+    // (e.g., an old manifest.json showing an outdated "Last updated" date).
+    // 'no-cache' still honors ETag/Last-Modified, so unchanged files are cheap.
+    fetchFresh(url) {
+        return fetch(url, { cache: 'no-cache' });
+    }
+
     async loadTimeseries() {
         try {
-            const response = await fetch(`${this.dataPath}timeseries.json`);
+            const response = await this.fetchFresh(`${this.dataPath}timeseries.json`);
             if (response.ok) {
                 this.timeseries = await response.json();
             } else {
@@ -84,7 +91,7 @@ class CrimeDashboard {
             try {
                 const manifestUrl = `${this.dataPath}manifest.json`;
                 console.log('Fetching manifest from:', manifestUrl);
-                const manifestResponse = await fetch(manifestUrl);
+                const manifestResponse = await this.fetchFresh(manifestUrl);
                 console.log('Manifest response status:', manifestResponse.status);
                 if (manifestResponse.ok) {
                     const manifest = await manifestResponse.json();
@@ -115,7 +122,7 @@ class CrimeDashboard {
                 const dateStr = this.formatDateForFile(date);
 
                 try {
-                    const response = await fetch(`${this.dataPath}${dateStr}.json`);
+                    const response = await this.fetchFresh(`${this.dataPath}${dateStr}.json`);
                     if (response.ok) {
                         dates.push(dateStr);
                     }
@@ -171,7 +178,7 @@ class CrimeDashboard {
             if (this.dataCache[dateStr]) {
                 this.data = this.dataCache[dateStr];
             } else {
-                const response = await fetch(`${this.dataPath}${dateStr}.json`);
+                const response = await this.fetchFresh(`${this.dataPath}${dateStr}.json`);
                 this.data = await response.json();
                 this.dataCache[dateStr] = this.data;
             }
@@ -403,7 +410,7 @@ class CrimeDashboard {
         // Prefetch all reports in the background so playback is smooth.
         for (const d of this.replayDates) {
             if (!this.dataCache[d]) {
-                fetch(`${this.dataPath}${d}.json`)
+                this.fetchFresh(`${this.dataPath}${d}.json`)
                     .then(r => r.ok ? r.json() : null)
                     .then(j => { if (j) this.dataCache[d] = j; })
                     .catch(() => {});
